@@ -1,0 +1,51 @@
+# 💻 Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# 📊 Data
+data/raw/
+data/preprocessed/
+*.csv
+*.json
+*.zip
+*.h5
+*.pt
+*.pth
+
+# 🔬 Jupyter
+.ipynb_checkpoints/
+
+# 🧪 Testing/Debug
+.DS_Store
+*.log
+*.tmp
+
+# ⚙️ Environment Config
+.env
+config/settings.yaml
+
+# 📦 Python Packaging
+dist/
+build/
+*.egg-info/
+
+# 🌐 FastAPI + React
+node_modules/
+*.log
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/.cache/
+backend/__pycache__/
+
+# 📦 VSCode
+.vscode/
+
+# 🌐 OS Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
