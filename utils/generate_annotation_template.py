@@ -1,23 +1,26 @@
+"""
+generate_reference_labels.py
+
+Generates annotations for verified reference samples (known genuine)
+from data/reference/, labeled as 'real'.
+
+Author: Eric Adesh
+"""
+
 import os
 import csv
 
-PREPROCESSED_DIR = "data/preprocessed"
+REFERENCE_DIR = "data/reference"
 ANNOTATION_DIR = "data/annotations"
 ANNOTATION_FILE = os.path.join(ANNOTATION_DIR, "reference_labels.csv")
 
-# Create the annotations directory if it doesn't exist
-os.makedirs(ANNOTATION_DIR, exist_ok=True)
-
-# CSV header
 header = ["filename", "category", "brand", "label", "notes"]
-
 rows = []
 
-print("📝 Scanning preprocessed images to create annotation template...\n")
+print("🧠 Generating annotation file for REFERENCE samples...\n")
 
-# Loop through each category and brand
-for category in os.listdir(PREPROCESSED_DIR):
-    cat_path = os.path.join(PREPROCESSED_DIR, category)
+for category in os.listdir(REFERENCE_DIR):
+    cat_path = os.path.join(REFERENCE_DIR, category)
     if not os.path.isdir(cat_path):
         continue
 
@@ -27,15 +30,17 @@ for category in os.listdir(PREPROCESSED_DIR):
             continue
 
         for file in os.listdir(brand_path):
-            if not file.lower().endswith((".jpg", ".jpeg", ".png")):
-                continue
-            rows.append([
-                file,          # filename
-                category,      # e.g., fertilizer
-                brand,         # e.g., YaraMila
-                "",            # label (to fill: real, fake, suspect)
-                ""             # notes
-            ])
+            if file.lower().endswith((".jpg", ".jpeg", ".png")):
+                rows.append([
+                    file,
+                    category,
+                    brand,
+                    "real",
+                    "verified as authentic"
+                ])
+
+# Ensure annotation folder exists
+os.makedirs(ANNOTATION_DIR, exist_ok=True)
 
 # Write to CSV
 with open(ANNOTATION_FILE, mode="w", newline="", encoding="utf-8") as f:
@@ -43,5 +48,5 @@ with open(ANNOTATION_FILE, mode="w", newline="", encoding="utf-8") as f:
     writer.writerow(header)
     writer.writerows(rows)
 
-print(f"✅ Annotation template created at: {ANNOTATION_FILE}")
-print(f"✍️  You can now open and fill in labels (real, fake, suspect) and notes as needed.\n")
+print(f"✅ Finished. Reference annotation file saved at: {ANNOTATION_FILE}")
+print(f"🧾 Total real samples annotated: {len(rows)}\n")
