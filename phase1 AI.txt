@@ -1,0 +1,8 @@
+0. data collection, cleaning and preprocessing
+1. Setup model blueprint
+2. Train model with autoencoder
+3. save model & weights
+4. Visualize loss curve
+5. Calculate, update anomaly threshold in settings.yaml
+6. update anomaly_Scoring
+
