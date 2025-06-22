@@ -1,0 +1,47 @@
+HarvestGuard/
+├── data/                            # All input & output image datasets
+│   ├── raw/                         # Unprocessed images (from field, vendors, etc.)
+│   ├── preprocessed/                # Cleaned, resized images for model training/testing
+│   ├── reference/                   # Verified authentic samples
+│   ├── expired_or_suspect/          # Fake, tampered, or expired samples (for scoring tests)
+│   └── annotations/                 # CSV files with labels, notes (e.g., real/fake/suspect)
+
+├── models/                          # Core AI models
+│   ├── autoencoder.py               # Autoencoder architecture (unsupervised)
+│   ├── dino_features.py             # Optional self-supervised model using DINO
+│   └── rl_agent.py                  # Optional reinforcement learning agent
+
+├── notebooks/                       # Jupyter Notebooks for visual workflows
+│   ├── 01_data_preprocessing.ipynb  # Explore & clean raw data
+│   ├── 02_train_autoencoder.ipynb   # Train your unsupervised model
+│   ├── 03_inference_demo.ipynb      # Visual scoring & explanation
+│   └── 04_rl_training.ipynb         # Train RL agent (if used)
+
+├── utils/                           # Helper scripts/utilities
+│   ├── image_processing.py          # Resize, clean, deduplicate images
+│   ├── anomaly_scoring.py           # Run scoring using trained model
+│   ├── calculate_threshold.py       # Compute anomaly score threshold from known good samples
+│   ├── update_threshold_config.py   # Save threshold into config/settings.yaml
+│   └── visualization.py             # For plotting reconstructions and score charts
+
+├── backend/                         # FastAPI backend (REST API for prediction)
+│   ├── main.py                      # Entry point for API
+│   ├── routes.py                    # Define API routes (/predict, /upload, etc.)
+│   ├── predictor.py                 # Load model and return results from input
+│   └── config.py                    # FastAPI settings, CORS, etc.
+
+├── frontend/                        # React (or React Native) frontend app
+│   ├── App.tsx                      # Main app component
+│   ├── screens/                     # Page views (Home, Scan, Results, etc.)
+│   ├── components/                  # Reusable UI components
+│   └── services/                    # API service calls to backend
+
+├── tests/                           # Unit tests
+│   └── test_predictor.py            # Test model prediction endpoint
+
+├── config/                          # Configuration files
+│   └── settings.yaml                # Holds your model threshold, image size, paths
+
+├── requirements.txt                 # Python packages
+├── README.md                        # Overview, how to run project
+└── LICENSE                          # License info (e.g. MIT)

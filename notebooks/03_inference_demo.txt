@@ -1,0 +1,20 @@
+
+📘 03_inference_demo.txt
+
+This notebook helps you visually inspect and test the anomaly detection model using images.
+
+Key Things It Does:
+--------------------
+1. ✅ Loads your trained autoencoder model from disk.
+2. 📐 Transforms input images to match model training size (128x128).
+3. 🧠 Computes anomaly scores by comparing original vs. reconstructed images.
+4. 🖼 Shows side-by-side visuals of original and reconstruction.
+5. 🔍 Lets you select and test individual images interactively.
+6. 📊 Scores a full directory and saves results to CSV for review.
+
+How to Interpret:
+--------------------
+- Low Score (e.g. < 0.01): ✅ REAL / GENUINE
+- High Score (e.g. > 0.015): ⚠️ SUSPECT / FAKE
+
+You can now visually test different brands and samples, and also export analysis for reporting.
