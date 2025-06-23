@@ -45,3 +45,69 @@ HarvestGuard/
 ├── requirements.txt                 # Python packages
 ├── README.md                        # Overview, how to run project
 └── LICENSE                          # License info (e.g. MIT)
+
+
+
+✅ Proposed Backend Structure
+backend/
+├── app/                           # Main application logic
+│   ├── api/                       # API route definitions
+│   │   ├── v1/                    # Versioned API
+│   │   │   ├── endpoints/         # Endpoint files
+│   │   │   │   ├── auth.py        # Login, register, token
+│   │   │   │   ├── user.py        # User dashboard endpoints
+│   │   │   │   ├── admin.py       # Admin-only endpoints
+│   │   │   │   ├── scan.py        # Image analysis (autoencoder + RL agent)
+│   │   │   │   └── feedback.py    # Feedback submission and review
+│   │   │   └── __init__.py
+│   │   └── __init__.py
+│   ├── core/                      # App configs & constants
+│   │   ├── config.py              # Environment configs
+│   │   ├── security.py            # JWT, password hashing
+│   │   └── settings.py            # App constants
+│   ├── crud/                      # DB interaction logic
+│   │   ├── user.py                # CRUD for users
+│   │   ├── scan.py                # CRUD for AI predictions
+│   │   └── feedback.py
+│   ├── db/                        # Database setup and session
+│   │   ├── base.py                # Base for SQLAlchemy models
+│   │   ├── models/                # DB Models
+│   │   │   ├── user.py
+│   │   │   ├── scan.py
+│   │   │   ├── feedback.py
+│   │   │   └── __init__.py
+│   │   └── session.py             # SQLAlchemy engine + session
+│   ├── schemas/                   # Pydantic validation schemas
+│   │   ├── user.py
+│   │   ├── scan.py
+│   │   ├── feedback.py
+│   │   └── token.py
+│   ├── services/                  # Business logic (or model-serving logic)
+│   │   ├── prediction.py          # Wrapper for loading AE + RL models
+│   │   └── feedback_handler.py
+│   └── main.py                    # FastAPI app instantiation
+
+├── alembic/                       # DB migrations (if needed)
+│   ├── versions/
+│   └── env.py
+
+├── tests/                         # Unit & integration tests
+│   ├── test_auth.py
+│   ├── test_user.py
+│   ├── test_scan.py
+│   └── ...
+
+├── requirements.txt
+├── .env                           # Env variables (DB creds, secret keys)
+└── README.md
+
+✅ Goals Covered Ffrom the Enhanced Bckend Structure:
+Feature	Implementation
+User/Admin Auth	auth.py, user.py, admin.py
+MySQL DB	Managed in db/session.py, models in db/models/
+AI Integration	services/prediction.py calls AE & RL
+Logging Predictions	Stored in scan.py model and CRUD
+Feedback Loop	Feedback schema, model, CRUD & endpoints
+Role Management	Users table includes role field (user / admin)
+Scalable API	Versioned endpoints under api/v1
+App-ready	Structure supports frontend integration and deployment
