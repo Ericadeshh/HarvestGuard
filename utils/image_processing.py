@@ -1,7 +1,11 @@
+# utils/image_processing.py
+
 import os
 from PIL import Image
 from pathlib import Path
 import hashlib
+import torch
+from torchvision import transforms
 
 # ==== 📁 Paths and Settings ====
 INPUT_DIR = "data/raw"
@@ -21,7 +25,29 @@ def is_low_quality(img):
 def get_image_hash(image):
     return hashlib.md5(image.tobytes()).hexdigest()
 
-# ==== 🔁 Main Function ====
+# ==== 🖼️ Single Image Preprocessing for Model Input ====
+def preprocess_image(image_path: str, image_size: tuple = TARGET_SIZE) -> torch.Tensor:
+    """
+    Preprocess a single image for model input.
+
+    Args:
+        image_path (str): Path to the image file.
+        image_size (tuple): Target size (height, width).
+
+    Returns:
+        torch.Tensor: Preprocessed image tensor of shape [C, H, W].
+    """
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    
+    transform = transforms.Compose([
+        transforms.Resize(image_size),
+        transforms.ToTensor()  # Outputs [C, H, W]
+    ])
+    image = Image.open(image_path).convert("RGB")
+    return transform(image)
+
+# ==== 🔁 Batch Image Preprocessing ====
 def preprocess_images():
     global total_processed, total_skipped
 

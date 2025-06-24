@@ -54,8 +54,18 @@ def load_model():
 # 🧠 Compute Image Reconstruction Error
 # =============================================
 def compute_reconstruction_error(model, image_tensor):
+    """
+    Compute Mean Squared Error (MSE) between original and reconstructed images.
+
+    Args:
+        model (nn.Module): The autoencoder model.
+        image_tensor (torch.Tensor): Input image tensor of shape [batch_size, C, H, W].
+
+    Returns:
+        float: MSE reconstruction error.
+    """
     with torch.no_grad():
-        image_tensor = image_tensor.to(DEVICE).unsqueeze(0)
+        image_tensor = image_tensor.to(DEVICE)  # Ensure tensor is on correct device
         reconstructed = model(image_tensor)
         loss = F.mse_loss(reconstructed, image_tensor)
     return loss.item()
@@ -67,7 +77,7 @@ def score_image(image_path, threshold=THRESHOLD):
     image = Image.open(image_path).convert("RGB")
     image_tensor = transform(image)
     model = load_model()
-    score = compute_reconstruction_error(model, image_tensor)
+    score = compute_reconstruction_error(model, image_tensor.unsqueeze(0))  # Add batch dim here
     label = "✅ REAL" if score < threshold else "⚠️ SUSPECT/FAKE"
 
     return {
