@@ -4,7 +4,10 @@ import torch
 import torch.nn.functional as F
 import yaml
 from PIL import Image
+from io import BytesIO
 from torchvision import transforms
+from typing import Optional, List
+from datetime import datetime
 
 # ===============================
 # Fix dynamic import paths
@@ -47,45 +50,74 @@ def load_autoencoder():
 
 def load_rl_agent():
     model = Agent().to(DEVICE)
-    # Optional: Load weights if you have them
-    # model.load_state_dict(torch.load(...))
+    # Optional: model.load_state_dict(...) if weights are saved
     model.eval()
     return model
 
+autoencoder = load_autoencoder()
+rl_agent = load_rl_agent()
+
 # ===============================
-# Main Prediction Function
+# Core prediction logic
 # ===============================
-def predict_image(image_path: str, custom_threshold: float = None):
-    threshold = custom_threshold if custom_threshold is not None else DEFAULT_THRESHOLD
-
-    # Load models
-    autoencoder = load_autoencoder()
-    rl_agent = load_rl_agent()
-
-    # Prepare image
-    image = Image.open(image_path).convert("RGB")
-    tensor = transform(image).unsqueeze(0).to(DEVICE)
-
-    # Reconstruction
+def predict_tensor(tensor, threshold: float = DEFAULT_THRESHOLD):
     with torch.no_grad():
         reconstruction = autoencoder(tensor)
         recon_error = F.mse_loss(reconstruction, tensor).item()
 
     is_anomaly = recon_error > threshold
 
-    # Use RL agent (mocked confidence here)
     with torch.no_grad():
         logits = rl_agent(tensor)
         probs = torch.softmax(logits, dim=1)
         predicted_class = torch.argmax(probs, dim=1).item()
         confidence = round(probs[0][predicted_class].item(), 4)
 
-    # Decision mapping
     decision = "FLAGGED" if is_anomaly else "ACCEPTED"
 
     return {
         "decision": decision,
         "confidence": confidence,
         "reconstruction_error": round(recon_error, 5),
-        "is_anomaly": is_anomaly
+        "is_anomaly": is_anomaly,
+        "timestamp": datetime.utcnow()
     }
+
+# ===============================
+# For file path
+# ===============================
+def predict_image(image_path: str, custom_threshold: Optional[float] = None):
+    threshold = custom_threshold or DEFAULT_THRESHOLD
+    image = Image.open(image_path).convert("RGB")
+    tensor = transform(image).unsqueeze(0).to(DEVICE)
+    return predict_tensor(tensor, threshold)
+
+# ===============================
+# For image bytes (from UploadFile)
+# ===============================
+def predict_image_from_bytes(file_bytes: bytes, custom_threshold: Optional[float] = None):
+    threshold = custom_threshold or DEFAULT_THRESHOLD
+    image = Image.open(BytesIO(file_bytes)).convert("RGB")
+    tensor = transform(image).unsqueeze(0).to(DEVICE)
+    return predict_tensor(tensor, threshold)
+
+# ===============================
+# Used by upload endpoints
+# ===============================
+def process_image_scan(file_bytes: bytes, filename: str, user_id: Optional[int] = None, db=None):
+    from app.db.crud import log_scan_result
+
+    result = predict_image_from_bytes(file_bytes)
+
+    if db and user_id:
+        log_scan_result(
+            db=db,
+            filename=filename,
+            decision=result["decision"],
+            confidence=result["confidence"],
+            reconstruction_error=result["reconstruction_error"],
+            is_anomaly=result["is_anomaly"],
+            user_id=user_id
+        )
+
+    return result
