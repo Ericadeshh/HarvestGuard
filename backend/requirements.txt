@@ -1,8 +1,27 @@
+# Core FastAPI Stack
 fastapi==0.115.0
+uvicorn==0.30.6
+python-multipart==0.0.9  # Required for form data handling
+
+# Database & ORM
 sqlalchemy==2.0.35
-pymysql==1.1.1
-python-dotenv==1.0.1
-passlib[bcrypt]==1.7.4
-python-jose[cryptography]==3.3.0
 alembic==1.13.3
-mysql-connector-python==8.4.0 
+pymysql==1.1.1
+mysql-connector-python==8.4.0
+
+# Security & Authentication
+passlib[bcrypt]==1.7.4
+python-jose==3.3.0
+pydantic-settings==2.5.2  # For configuration management
+
+# Environment & Utilities
+python-dotenv==1.0.1
+pillow==10.4.0  # Image processing
+
+# Machine Learning
+torch==2.4.1
+torchvision==0.19.1
+
+# Development Extras (optional)
+# pytest==8.1.1
+# httpx==0.27.0

@@ -1,103 +1,128 @@
+#!/usr/bin/env python3
 """
-Database setup utility for HarvestGuard.
-Automatically creates the database and tables if they don't exist.
+Database Initialization Script for HarvestGuard
+
+Features:
+- Automatic database creation (if not exists)
+- Table schema verification
+- Comprehensive error handling
+- Clean terminal output formatting
 """
 
-# backend/app/db/database_setup.py
-import sys
 import logging
+import sys
 from pathlib import Path
+from sqlalchemy import create_engine, inspect, text
+from sqlalchemy.exc import SQLAlchemyError
 
-from sqlalchemy import create_engine, text
-from sqlalchemy.exc import OperationalError, ProgrammingError
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
 
-# Ensure the backend directory is in path
+# Add project root to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 try:
-    from app.db.models import Base
     from app.core.config import settings
-except ImportError:
-    # Fallback for direct execution
-    from .models import Base
-    from ..core.config import settings
-    
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+    from app.db.models import Base
+except ImportError as e:
+    logger.error(f"Import error: {e}")
+    sys.exit(1)
 
-def check_database_exists(engine, db_name):
-    """
-    Check if the database exists on the MySQL server.
-    
-    Args:
-        engine: SQLAlchemy engine instance
-        db_name: Name of the database to check
-        
-    Returns:
-        bool: True if database exists, False otherwise
-    """
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(text(f"SHOW DATABASES LIKE '{db_name}'"))
-            return result.rowcount > 0
-    except OperationalError as e:
-        logger.error(f"Error checking database existence: {e}")
-        return False
+def print_header():
+    """Display script header with version info"""
+    print("\n" + "=" * 60)
+    print("HARVESTGUARD DATABASE SETUP".center(60))
+    print(f"Environment: {settings.MYSQL_DB}".center(60))
+    print("=" * 60 + "\n")
 
 def create_database(engine, db_name):
-    """
-    Create a new database on the MySQL server.
-    
-    Args:
-        engine: SQLAlchemy engine instance
-        db_name: Name of the database to create
-    """
+    """Create database if it doesn't exist"""
     try:
         with engine.connect() as conn:
-            conn.execute(text(f"CREATE DATABASE {db_name}"))
+            conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {db_name}"))
             conn.execute(text(f"USE {db_name}"))
             conn.commit()
-        logger.info(f"Database '{db_name}' created successfully")
-    except OperationalError as e:
-        logger.error(f"Error creating database: {e}")
-        raise
+        logger.info(f"✅ Database '{db_name}' created/verified")
+        return True
+    except SQLAlchemyError as e:
+        logger.error(f"❌ Database creation failed: {e}")
+        return False
+
+def verify_tables(engine):
+    """Verify all required tables exist"""
+    inspector = inspect(engine)
+    existing_tables = inspector.get_table_names()
+    required_tables = ['users', 'scans', 'feedback']
+    
+    print("\n" + "-" * 60)
+    print("TABLE VERIFICATION".center(60))
+    print("-" * 60)
+    
+    for table in required_tables:
+        status = "✅ FOUND" if table in existing_tables else "❌ MISSING"
+        print(f"{table.upper():<15} {status:>10}")
+    
+    return all(table in existing_tables for table in required_tables)
 
 def setup_database():
-    """
-    Main function to set up the HarvestGuard database.
-    Handles both database and table creation if they don't exist.
-    """
-    # First create an engine without specifying the database
-    root_engine = create_engine(
-        f"mysql+mysqlconnector://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_HOST}/",
-        pool_pre_ping=True
-    )
+    """Main database setup routine"""
+    print_header()
     
-    # Check if database exists
-    if not check_database_exists(root_engine, settings.MYSQL_DB):
-        logger.info(f"Database '{settings.MYSQL_DB}' not found. Creating...")
-        create_database(root_engine, settings.MYSQL_DB)
-    else:
-        logger.info(f"Database '{settings.MYSQL_DB}' already exists")
-    
-    # Now connect to the specific database
-    db_engine = create_engine(
-        f"mysql+mysqlconnector://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_HOST}/{settings.MYSQL_DB}",
-        pool_pre_ping=True
-    )
-    
-    # Create tables if they don't exist
     try:
-        logger.info("Creating tables if they don't exist...")
+        # Verify we have all required settings
+        if not all([settings.MYSQL_USER, settings.MYSQL_PASSWORD, settings.MYSQL_HOST]):
+            raise ValueError("Missing required database configuration")
+            
+        logger.info(f"Using database URL: {settings.DATABASE_URL}")
+        
+        # Create root engine (no database specified)
+        root_engine = create_engine(
+            f"mysql+mysqlconnector://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}@{settings.MYSQL_HOST}/",
+            pool_pre_ping=True,
+            echo=False
+        )
+    except AttributeError as e:
+        logger.error(f"Configuration error: {e}")
+        logger.error("Please ensure DATABASE_URL is properly configured in config.py")
+        sys.exit(1)
+        
+    # Create database if needed
+    if not create_database(root_engine, settings.MYSQL_DB):
+        sys.exit(1)
+    
+    # Create tables engine
+    db_engine = create_engine(
+        settings.DATABASE_URL,
+        pool_pre_ping=True,
+        echo=False
+    )
+    
+    try:
+        logger.info("🔨 Creating tables...")
         Base.metadata.create_all(bind=db_engine)
-        logger.info("Table setup completed successfully")
-    except OperationalError as e:
-        logger.error(f"Error creating tables: {e}")
-        raise
+        logger.info("🎉 Table creation completed successfully")
+        
+        # Verify tables
+        if not verify_tables(db_engine):
+            logger.warning("⚠️  Some tables are missing")
+            sys.exit(1)
+            
+    except SQLAlchemyError as e:
+        logger.error(f"Table creation failed: {e}")
+        sys.exit(1)
     finally:
         db_engine.dispose()
         root_engine.dispose()
 
 if __name__ == "__main__":
     setup_database()
+    print("\n" + "=" * 60)
+    print("DATABASE SETUP COMPLETE".center(60))
+    print("=" * 60 + "\n")

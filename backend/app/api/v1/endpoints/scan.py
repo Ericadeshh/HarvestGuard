@@ -1,63 +1,39 @@
-# backend/app/api/scan.py
-# Endpoint for image scanning and anomaly detection.
-
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.db.models import Scan, User
-from app.schemas.scan import ScanCreate, Scan
-from app.services.prediction import predictor
-from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
-from app.config import settings
+from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi.responses import JSONResponse
+from app.services.prediction import predict_image
+from typing import Optional
+import logging
 import os
-from pathlib import Path
+import tempfile
+from datetime import datetime
+from app.schemas.scan import ScanResult
 
 router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
+logger = logging.getLogger(__name__)
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    """Get current user from JWT token."""
+@router.post("/predict", response_model=ScanResult)
+async def predict(
+    file: UploadFile = File(...),
+    threshold: Optional[float] = None
+):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-        username: str = payload.get("sub")
-        if username is None:
-            raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-        user = db.query(User).filter(User.username == username).first()
-        if user is None:
-            raise HTTPException(status_code=401, detail="User not found")
-        return user
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+        with tempfile.NamedTemporaryFile(delete=False) as temp:
+            content = await file.read()
+            temp.write(content)
+            temp_path = temp.name
 
-@router.post("/", response_model=Scan)
-async def scan_image(file: UploadFile = File(...), user=Depends(get_current_user), db: Session = Depends(get_db)):
-    """Upload an image and perform anomaly detection."""
-    try:
-        # Save uploaded image temporarily
-        upload_dir = Path(settings.PROJECT_ROOT) / "backend" / "uploads"
-        upload_dir.mkdir(exist_ok=True)
-        file_path = upload_dir / file.filename
-        with open(file_path, "wb") as f:
-            f.write(await file.read())
-        
-        # Perform prediction
-        result = predictor.predict(str(file_path))
-        
-        # Save scan result to database
-        scan = Scan(
-            user_id=user.id,
-            image_filename=file.filename,
-            anomaly_score=result["anomaly_score"],
-            prediction=result["prediction"]
-        )
-        db.add(scan)
-        db.commit()
-        db.refresh(scan)
-        
-        # Clean up temporary file
-        os.remove(file_path)
-        
-        return scan
+        result = predict_image(temp_path, custom_threshold=threshold)
+
+        os.unlink(temp_path)
+
+        return {
+            "image": file.filename,
+            "decision": result["decision"],
+            "confidence": result["confidence"],
+            "reconstruction_error": result["reconstruction_error"],
+            "is_anomaly": result["is_anomaly"],
+            "timestamp": datetime.utcnow()
+        }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Scan failed: {str(e)}")
+        logger.error(f"Prediction failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
