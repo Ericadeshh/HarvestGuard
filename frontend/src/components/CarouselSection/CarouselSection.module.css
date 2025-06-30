@@ -1,0 +1,8 @@
+.carousel {
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.carousel img {
+  border-radius: 8px;
+}

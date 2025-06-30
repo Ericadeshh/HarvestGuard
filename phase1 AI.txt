@@ -6,3 +6,55 @@
 5. Calculate, update anomaly threshold in settings.yaml
 6. update anomaly_Scoring
 
+
+🔍 What the Autoencoder Was Doing
+The autoencoder was trained on only genuine/reference images. Its job is:
+
+Reconstruct images as closely as possible.
+
+Measure reconstruction error (MSE).
+
+If the reconstruction error is high, the image is likely suspicious (fake/expired/tampered).
+
+So in simple terms:
+
+Autoencoder = Authenticity Detector
+"This image doesn't look like the real stuff I was trained on."
+
+🤖 What the RL Agent Is Doing
+The Reinforcement Learning agent doesn't learn to detect fakes directly. Instead, it learns to interact intelligently with a stream of images (using the autoencoder as a sensor) and maximize a long-term reward.
+
+✅ What it checks for or responds to:
+The RL agent gets a reconstructed image from the autoencoder.
+
+The reconstruction error and anomaly score (from the autoencoder) is used to shape its reward.
+
+The agent chooses actions like:
+
+0 = Accept image as genuine
+
+1 = Flag image as fake/suspicious
+
+It gets rewarded based on how good its decision was:
+
+Low error + Accept = Good
+
+High error + Reject = Good
+
+High error + Accept = Bad
+
+Low error + Reject = Bad
+
+So in a way:
+
+RL Agent = Decision Maker
+"Based on how weird this image looks (autoencoder score), should I accept or flag it?"
+
+🔁 Why Use an RL Agent at All?
+You could stop at the autoencoder and threshold. But RL adds intelligent decision-making, for example:
+
+Learning from sequences of images (not just single frames).
+
+Adapting decisions based on context or reward feedback.
+
+Integrating user feedback into learning in the future.

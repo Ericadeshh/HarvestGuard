@@ -1,104 +1,140 @@
 HarvestGuard/
-├── data/                            # All input & output image datasets
-│   ├── raw/                         # Unprocessed images (from field, vendors, etc.)
-│   ├── preprocessed/                # Cleaned, resized images for model training/testing
+├── data/                            # Input/output image datasets
+│   ├── raw/                         # Unprocessed images
+│   ├── preprocessed/                # Cleaned, resized images
 │   ├── reference/                   # Verified authentic samples
-│   ├── expired_or_suspect/          # Fake, tampered, or expired samples (for scoring tests)
-│   └── annotations/                 # CSV files with labels, notes (e.g., real/fake/suspect)
-
-├── models/                          # Core AI models
-│   ├── autoencoder.py               # Autoencoder architecture (unsupervised)
-│   ├── dino_features.py             # Optional self-supervised model using DINO
-│   └── rl_agent.py                  # Optional reinforcement learning agent
-
-├── notebooks/                       # Jupyter Notebooks for visual workflows
-│   ├── 01_data_preprocessing.ipynb  # Explore & clean raw data
-│   ├── 02_train_autoencoder.ipynb   # Train your unsupervised model
-│   ├── 03_inference_demo.ipynb      # Visual scoring & explanation
-│   └── 04_rl_training.ipynb         # Train RL agent (if used)
-
-├── utils/                           # Helper scripts/utilities
-│   ├── image_processing.py          # Resize, clean, deduplicate images
-│   ├── anomaly_scoring.py           # Run scoring using trained model
-│   ├── calculate_threshold.py       # Compute anomaly score threshold from known good samples
-│   ├── update_threshold_config.py   # Save threshold into config/settings.yaml
-│   └── visualization.py             # For plotting reconstructions and score charts
-
-├── backend/                         # FastAPI backend (REST API for prediction)
-│   ├── main.py                      # Entry point for API
-│   ├── routes.py                    # Define API routes (/predict, /upload, etc.)
-│   ├── predictor.py                 # Load model and return results from input
-│   └── config.py                    # FastAPI settings, CORS, etc.
-
-├── frontend/                        # React (or React Native) frontend app
-│   ├── App.tsx                      # Main app component
-│   ├── screens/                     # Page views (Home, Scan, Results, etc.)
-│   ├── components/                  # Reusable UI components
-│   └── services/                    # API service calls to backend
-
-├── tests/                           # Unit tests
-│   └── test_predictor.py            # Test model prediction endpoint
-
-├── config/                          # Configuration files
-│   └── settings.yaml                # Holds your model threshold, image size, paths
-
-├── requirements.txt                 # Python packages
-├── README.md                        # Overview, how to run project
-└── LICENSE                          # License info (e.g. MIT)
-
-
-
-✅ Proposed Backend Structure
-backend/
-├── app/                           # Main application logic
-│   ├── api/                       # API route definitions
-│   │   ├── v1/                    # Versioned API
-│   │   │   ├── endpoints/         # Endpoint files
-│   │   │   │   ├── auth.py        # Login, register, token
-│   │   │   │   ├── user.py        # User dashboard endpoints
-│   │   │   │   ├── admin.py       # Admin-only endpoints
-│   │   │   │   ├── scan.py        # Image analysis (autoencoder + RL agent)
-│   │   │   │   └── feedback.py    # Feedback submission and review
+│   ├── expired_or_suspect/          # Fake/expired samples
+│   └── annotations/                 # CSV files with labels
+├── models/                          # AI models
+│   ├── autoencoder.py               # Autoencoder architecture
+│   ├── rl_agent.py                  # RL agent
+│   └── checkpoints/                 # Saved model weights
+│       ├── autoencoder.pth
+│       └── rl_agent_smart.pth
+├── notebooks/                       # Jupyter notebooks for exploration
+│   ├── 01_data_preprocessing.ipynb
+│   ├── 02_train_autoencoder.ipynb
+│   ├── 03_inference_demo.ipynb
+│   └── 04_rl_training.ipynb
+├── utils/                           # Helper scripts
+│   ├── image_processing.py
+│   ├── anomaly_scoring.py
+│   ├── calculate_threshold.py
+│   ├── update_threshold_config.py
+│   └── visualization.py
+├── backend/                         # FastAPI backend
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── v1/
+│   │   │   │   ├── endpoints/
+│   │   │   │   │   ├── auth.py      # Authentication endpoints
+│   │   │   │   │   ├── scan.py      # Image scanning (single/batch)
+│   │   │   │   │   ├── feedback.py  # Feedback submission
+│   │   │   │   │   ├── user.py      # User management
+│   │   │   │   │   └── status.py    # Server status endpoint
+│   │   │   │   └── __init__.py
 │   │   │   └── __init__.py
+│   │   ├── core/
+│   │   │   ├── config.py            # Environment configs
+│   │   │   ├── security.py          # JWT and auth utilities
+│   │   │   └── __init__.py
+│   │   ├── crud/
+│   │   │   ├── user.py             # User CRUD
+│   │   │   ├── scan.py             # Scan CRUD
+│   │   │   ├── feedback.py         # Feedback CRUD
+│   │   │   └── __init__.py
+│   │   ├── db/
+│   │   │   ├── models/
+│   │   │   │   ├── user.py        # User model
+│   │   │   │   ├── scan.py        # Scan model
+│   │   │   │   ├── feedback.py    # Feedback model
+│   │   │   │   └── __init__.py
+│   │   │   ├── session.py          # DB session management
+│   │   │   ├── init_db.py          # DB initialization
+│   │   │   └── __init__.py
+│   │   ├── schemas/
+│   │   │   ├── user.py            # User schemas
+│   │   │   ├── scan.py            # Scan schemas
+│   │   │   ├── feedback.py        # Feedback schemas
+│   │   │   ├── token.py           # Token schemas
+│   │   │   └── __init__.py
+│   │   ├── services/
+│   │   │   ├── prediction.py      # AI prediction logic
+│   │   │   ├── batch_processor.py # Batch processing logic
+│   │   │   └── __init__.py
+│   │   └── main.py                 # FastAPI app entry
+│   ├── tests/
+│   │   ├── test_auth.py
+│   │   ├── test_scan.py
+│   │   ├── test_feedback.py
+│   │   ├── test_user.py
+│   │   ├── test_cli_batch_scan.py  # Moved demo_cli_batch_scan.py
 │   │   └── __init__.py
-│   ├── core/                      # App configs & constants
-│   │   ├── config.py              # Environment configs
-│   │   ├── security.py            # JWT, password hashing
-│   │   └── settings.py            # App constants
-│   ├── crud/                      # DB interaction logic
-│   │   ├── user.py                # CRUD for users
-│   │   ├── scan.py                # CRUD for AI predictions
-│   │   └── feedback.py
-│   ├── db/                        # Database setup and session
-│   │   ├── base.py                # Base for SQLAlchemy models
-│   │   ├── models/                # DB Models
-│   │   │   ├── user.py
-│   │   │   ├── scan.py
-│   │   │   ├── feedback.py
-│   │   │   └── __init__.py
-│   │   └── session.py             # SQLAlchemy engine + session
-│   ├── schemas/                   # Pydantic validation schemas
-│   │   ├── user.py
-│   │   ├── scan.py
-│   │   ├── feedback.py
-│   │   └── token.py
-│   ├── services/                  # Business logic (or model-serving logic)
-│   │   ├── prediction.py          # Wrapper for loading AE + RL models
-│   │   └── feedback_handler.py
-│   └── main.py                    # FastAPI app instantiation
-
-├── alembic/                       # DB migrations (if needed)
-│   ├── versions/
-│   └── env.py
-
-├── tests/                         # Unit & integration tests
-│   ├── test_auth.py
-│   ├── test_user.py
-│   ├── test_scan.py
-│   └── ...
-
-├── requirements.txt
-├── .env                           # Env variables (DB creds, secret keys)
+│   ├── scripts/
+│   │   └── batch_run.py           # CLI batch scanner
+│   ├── .env                        # Environment variables
+│   ├── requirements.txt            # Dependencies
+│   └── README.md
+frontend/
+├── src/
+│   ├── assets/                 # Static assets
+│   │   ├── logo.png
+│   │   └── background.jpg
+│   ├── components/
+│   │   ├── Navbar/
+│   │   │   ├── Navbar.tsx
+│   │   │   └── Navbar.module.css
+│   │   ├── Footer/
+│   │   │   ├── Footer.tsx
+│   │   │   └── Footer.module.css
+│   │   ├── ServerStatus/
+│   │   │   ├── ServerStatus.tsx
+│   │   │   └── ServerStatus.module.css
+│   │   ├── HeroSection/
+│   │   │   ├── HeroSection.tsx
+│   │   │   └── HeroSection.module.css
+│   │   ├── CarouselSection/
+│   │   │   ├── CarouselSection.tsx
+│   │   │   └── CarouselSection.module.css
+│   │   ├── FileUpload/
+│   │   │   ├── FileUpload.tsx
+│   │   │   └── FileUpload.module.css
+│   │   ├── BatchUpload/
+│   │   │   ├── BatchUpload.tsx
+│   │   │   └── BatchUpload.module.css
+│   │   ├── ResultsTable/
+│   │   │   ├── ResultsTable.tsx
+│   │   │   └── ResultsTable.module.css
+│   │   ├── GuideContent/
+│   │   │   ├── GuideContent.tsx
+│   │   │   └── GuideContent.module.css
+│   │   ├── LoadingSpinner/
+│   │   │   ├── LoadingSpinner.tsx
+│   │   │   └── LoadingSpinner.module.css
+│   ├── pages/
+│   │   ├── Home/
+│   │   │   ├── Home.tsx
+│   │   ├── Upload/
+│   │   │   ├── Upload.tsx
+│   │   ├── Results/
+│   │   │   ├── Results.tsx
+│   │   ├── Guide/
+│   │   │   ├── Guide.tsx
+│   │   ├── Login/
+│   │   │   ├── Login.tsx
+│   ├── services/
+│   │   ├── api.ts
+│   │   └── auth.ts
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── public/
+│   ├── favicon.ico
+│   └── index.html
+├── vite.config.ts
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
 └── README.md
 
 ✅ Goals Covered Ffrom the Enhanced Bckend Structure:
