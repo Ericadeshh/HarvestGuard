@@ -1,4 +1,0 @@
-
-"""
-Initialize the db package.
-"""

@@ -1,5 +1,6 @@
 import type { ScanResult } from "../../types/scan";
 import styles from "./ResultsTable.module.css";
+import { Table } from "react-bootstrap";
 
 interface ResultsTableProps {
   results: ScanResult[];
@@ -7,7 +8,7 @@ interface ResultsTableProps {
 
 const ResultsTable: React.FC<ResultsTableProps> = ({ results }) => {
   return (
-    <table className={styles.table}>
+    <Table striped bordered hover className={styles.table}>
       <thead>
         <tr>
           <th>Image</th>
@@ -36,7 +37,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

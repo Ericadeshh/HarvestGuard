@@ -1,13 +1,6 @@
-const API_BASE_URL = "http://localhost:8000/api/v1";
+import type { ScanResult } from "../types/scan";
 
-interface ScanResult {
-  image: string;
-  decision: string;
-  confidence: number;
-  reconstruction_error: number;
-  is_anomaly: boolean;
-  timestamp: string;
-}
+const API_BASE_URL = "http://localhost:8000/api/v1";
 
 interface BatchScanResponse {
   status: string;
