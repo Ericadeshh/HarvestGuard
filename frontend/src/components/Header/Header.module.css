@@ -1,46 +1,14 @@
 .header {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding-bottom: 1rem;
-}
-
-.secondaryNav {
-  display: none;
-  width: 100%;
-  background: #2d3748;
-  padding: 0.5rem 2rem;
-  text-align: center;
-}
-
-@media (min-width: 992px) {
-  .secondaryNav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-  }
-}
-
-.secondaryLink {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.secondaryLink:hover {
-  color: #48bb78;
-}
-
-.separator {
-  color: #ffffff;
-  font-size: 0.9rem;
+  padding: 1rem 0;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .container {
@@ -48,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
-  margin: 0.5rem auto 0 auto;
+  margin: 0 auto;
   padding: 0 2rem;
   flex-wrap: wrap;
 }
@@ -58,114 +26,35 @@
   align-items: center;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2d3748;
+  color: #2f6b2e; /* Deep Green */
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.brand:hover {
+  color: #c7e77a; /* Soft Lime */
+  transform: scale(1.05);
 }
 
 .brandIcon {
   width: 40px;
   height: auto;
   margin-right: 0.5rem;
-}
-
-.brand:hover {
-  color: #48bb78;
-}
-
-.searchWrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 0.75rem;
-}
-
-@media (min-width: 992px) {
-  .searchWrapper {
-    display: none;
-  }
-}
-
-.searchForm {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.searchInputWrapper {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  border: 1px solid #e2e8f0;
   border-radius: 4px;
-}
-
-.searchInputWrapper:hover {
-  border-color: #48bb78;
-}
-
-.searchInput {
-  flex: 1;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #2d3748;
-  background: transparent;
-}
-
-.searchInput:focus {
-  outline: none;
-}
-
-.searchInput:focus + .searchLabel,
-.searchInput:not(:placeholder-shown) + .searchLabel {
-  transform: translateY(-1.2rem) scale(0.75);
-  top: 0;
-  color: #48bb78;
-  background: #fff;
-  padding: 0 0.3rem;
-}
-
-.searchLabel {
-  position: absolute;
-  top: 50%;
-  left: 1rem;
-  transform: translateY(-50%);
-  font-size: 0.9rem;
-  color: #4a5568;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.searchButton {
-  padding: 0.75rem;
-  border: none;
-  background-color: #48bb78;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  margin-left: 0.25rem;
-}
-
-.searchButton:hover {
-  background-color: #38a169;
-}
-
-.searchIcon {
-  font-size: 0.9rem;
 }
 
 .hamburger {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #2d3748;
+  color: #333333; /* Charcoal Gray */
   cursor: pointer;
   display: none;
+  transition: color 0.3s ease;
+}
+
+.hamburger:hover {
+  color: #c7e77a; /* Soft Lime */
 }
 
 @media (max-width: 991px) {
@@ -174,31 +63,15 @@
   }
 }
 
-.hamburger:hover {
-  color: #48bb78;
-}
-
-.desktopSearch {
-  display: none;
-}
-
-@media (min-width: 992px) {
-  .desktopSearch {
-    display: flex;
-    align-items: center;
-    margin-right: 1.5rem;
-  }
-}
-
 .desktopNav {
   display: flex;
   align-items: center;
+  gap: 1.5rem;
 }
 
 .navLink {
-  margin-left: 1rem;
-  font-size: 1.2rem;
-  color: #2d3748;
+  font-size: 1rem;
+  color: #333333; /* Charcoal Gray */
   background: none;
   border: none;
   cursor: pointer;
@@ -206,19 +79,23 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
 }
 
 .navLink:hover {
-  color: #48bb78;
+  color: #2f6b2e;
+  transform: scale(1.05);
 }
 
 .navLink.active {
-  color: #48bb78;
+  color: #2f6b2e; /* Deep Green */
+  border-bottom: 2px solid #c7e77a; /* Soft Lime */
 }
 
 .navLink svg {
   font-size: 1.2rem;
+  margin-right: 0.3rem;
 }
 
 .dropdown {
@@ -226,51 +103,64 @@
   top: 100%;
   left: auto;
   right: 0;
-  background-color: #fff;
+  background: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1001;
   min-width: 200px;
+  padding: 0.5rem 0;
+  animation: slideIn 0.3s ease-in;
 }
 
 .dropdownItem {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  color: #4a5568;
+  color: #333333; /* Charcoal Gray */
   font-size: 0.9rem;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .dropdownItem:hover {
-  background-color: #f4f6f8;
-  color: #48bb78;
+  background: linear-gradient(
+    90deg,
+    #ddebbc,
+    #f5f5eb
+  ); /* Soft Lime to Muted Cream */
+  color: #2f6b2e; /* Deep Green */
+}
+
+.dropdownIcon {
+  font-size: 1rem;
 }
 
 .logoutButton {
   display: block;
   width: 50%;
   padding: 0.5rem 1rem;
-  background-color: #e53e3e;
-  color: #fff;
+  color: #d9534f !important;
   font-size: 0.9rem;
   border: none;
   border-radius: 4px;
   margin: 0.5rem 1rem;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .logoutButton:hover {
-  background-color: #c53030;
+  background-color: #f8d7da !important; /* Light Alert Red */
+  color: #c53030 !important; /* Darker Alert Red */
 }
 
 .mobileMenu {
   position: fixed;
   top: 0;
   left: 0;
-  width: 60vw;
+  width: 50vw; /* Reduced from 60vw */
   height: 100vh;
-  background-color: #fff;
+  background: #f5f5eb; /* Muted Cream */
   z-index: 1002;
   transform: translateX(-100%);
   transition: transform 0.4s ease;
@@ -286,22 +176,21 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem 1rem;
-  background-color: #f4f6f8;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #2d3748;
+  color: #2f6b2eb2;
 }
 
 .closeButton {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #2d3748;
+  color: #2f6b2e;
   cursor: pointer;
 }
 
 .closeButton:hover {
-  color: #48bb78;
+  color: #a2703d; /* Clay Brown */
 }
 
 .mobileNav {
@@ -315,9 +204,9 @@
 }
 
 .mobileNavTitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #2d3748;
+  color: #333333; /* Charcoal Gray */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -328,10 +217,11 @@
   width: 100%;
   text-align: left;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .mobileNavTitle:hover {
-  color: #48bb78;
+  color: #2f6b2e;
 }
 
 .mobileNavTitle span {
@@ -347,25 +237,30 @@
 .mobileNavLink {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #4a5568;
+  color: #333333; /* Charcoal Gray */
   padding: 0.4rem 1rem;
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .mobileNavLink:hover {
-  background-color: #f4f6f8;
-  color: #48bb78;
+  background: #e8e8d9; /* Light Muted Cream */
+  color: #2f6b2e; /* Deep Green */
 }
 
 .mobileDropdown {
+  font-size: 0.9rem;
   padding-left: 1rem;
-  background-color: #f4f6f8;
+  background: #ffffff;
+  border-radius: 4px;
 }
 
 .openIcon {
   font-size: 0.9rem;
-  color: #4a5568;
+  color: #333333; /* Charcoal Gray */
 }
 
 .openIcon.open {
@@ -378,8 +273,29 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6); /* Darker background */
+  backdrop-filter: blur(8px); /* Blurred effect */
   z-index: 1001;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 991px) {
@@ -387,8 +303,8 @@
     display: none;
   }
   .container {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 }
 
@@ -398,11 +314,6 @@
   }
   .brandIcon {
     width: 30px;
-  }
-  .searchInput,
-  .searchButton {
-    font-size: 0.9rem;
-    padding: 0.5rem;
   }
   .hamburger {
     font-size: 1.2rem;

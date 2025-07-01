@@ -1,161 +1,383 @@
-.container {
+/* Home.module.css */
+
+/* Base Styles */
+.home {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f4f6f8;
 }
 
-.home {
+/* Hero Section - Desktop */
+.heroContainer {
+  display: flex;
+  min-height: 90vh;
+  position: relative;
+}
+
+.heroContent {
+  flex: 1;
+  padding: 4rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-  background-color: #f4f6f8;
-  padding: 20px;
+  justify-content: center;
+  z-index: 2;
+  max-width: 50%;
 }
 
-.hero {
-  text-align: center;
-  padding: 2rem 0;
+.heroImage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroImage::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(233, 249, 231, 0.7) 0%,
+    rgba(179, 242, 194, 0.3) 30%,
+    transparent 50%
+  );
+  z-index: 1;
+}
+
+.heroImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .logo {
-  width: 150px;
-  height: auto;
-  margin-bottom: 1.5rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .title {
-  font-size: 1.8rem;
+  font-size: 3.5rem;
+  font-weight: 800;
   color: #2d3748;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #4a5568;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 80%;
 }
 
 .serverStatus {
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
   color: #4a5568;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
 .statusOnline {
-  color: #48bb78;
-  font-weight: 600;
+  background-color: #48bb78;
 }
 
 .statusOffline {
-  color: #e53e3e;
-  font-weight: 600;
+  background-color: #e53e3e;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .ctaButton {
-  font-size: 1rem;
-  color: #48bb78;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #48bb78;
   text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #48bb78;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ctaButton:hover {
-  background-color: #48bb78;
-  color: white;
+  background-color: #38a169;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
 }
 
+.dashboardButton {
+  font-size: 1.1rem;
+  color: #48bb78;
+  background-color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #48bb78;
+}
+
+.dashboardButton:hover {
+  background-color: #f0fff4;
+  transform: translateY(-2px);
+}
+
+/* Features Section */
 .features {
-  padding: 2rem 0;
+  padding: 4rem 2rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
+  margin: 0 auto;
   text-align: center;
 }
 
 .featuresTitle {
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   color: #2d3748;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  font-weight: 700;
 }
 
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .featureCard {
   background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.featureCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  color: #48bb78;
+  margin-bottom: 1.5rem;
 }
 
 .featureCard h3 {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #2d3748;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .featureCard p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #4a5568;
+  line-height: 1.6;
 }
 
-.footer {
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #4a5568;
-}
-
-.footer a {
-  color: #48bb78;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
+/* Mobile Styles */
 @media (max-width: 768px) {
-  .home {
-    margin-top: 5rem;
-    padding: 10px;
+  .heroContainer {
+    flex-direction: column;
+    min-height: auto;
+    position: relative;
   }
 
-  .logo {
-    width: 100px;
+  .heroContent {
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative; /* Add this */
+    z-index: 1; /* Add this */
+
+    /* Modified background with separate layers */
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.7),
+        rgba(76, 133, 95, 0.55)
+      ),
+      url("../../assets/HarvestGuardLogo.jpg") no-repeat center/cover;
+
+    /* Backdrop filter properties */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+    /* Ensure content is visible */
+    color: white;
+    min-height: 80vh;
+    isolation: isolate; /* Creates new stacking context */
+  }
+  /* Add a pseudo-element for better blur effect */
+  .heroContent::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(84, 84, 84, 0.5);
+    z-index: -1;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
+  }
+  .heroImage {
+    display: none;
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
+    color: white;
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 100%;
   }
 
-  .ctaButton {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+  .serverStatus {
+    color: rgba(255, 255, 255, 0.9);
+    justify-content: center;
+  }
+
+  .logo {
+    margin: 0 auto 2rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ctaButton,
+  .dashboardButton {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .features {
+    padding: 3rem 1rem;
   }
 
   .featuresTitle {
-    font-size: 1.4rem;
+    font-size: 2rem;
   }
+}
 
-  .featureCard {
-    padding: 1rem;
-  }
+/* Additional Tech Section */
+.techSection {
+  padding: 4rem 2rem;
+  background-color: #2d3748;
+  color: white;
+  text-align: center;
+}
 
-  .featureCard h3 {
-    font-size: 1rem;
-  }
+.techTitle {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
 
-  .featureCard p {
-    font-size: 0.8rem;
-  }
+.techDescription {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.techItem {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.techItem:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.techItem h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #48bb78;
+}
+
+.techItem p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Stats Section */
+.statsSection {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.statsTitle {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.statItem {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.statNumber {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #48bb78;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 1.1rem;
+  color: #4a5568;
 }

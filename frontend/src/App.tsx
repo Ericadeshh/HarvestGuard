@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import Login from "./components/Login/Login";
 import ScanPage from "./components/ScanPage/ScanPage";
 import SignUp from "./components/SignUp/SignUp";
+import Footer from "./components/Footer/Footer";
 import styles from "./App.module.css";
 
 const App: React.FC = () => {
@@ -58,6 +59,7 @@ const App: React.FC = () => {
             element={<Navigate to={token ? "/scan" : "/login"} replace />}
           />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

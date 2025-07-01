@@ -6,8 +6,9 @@ import {
   FaQuestionCircle,
   FaCamera,
   FaHome,
-  FaSearch,
   FaAngleRight,
+  FaImage,
+  FaImages,
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
@@ -21,16 +22,17 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<
-    "account" | "help" | null
+    "account" | "help" | "scan" | null
   >(null);
-  const [hoverDropdown, setHoverDropdown] = useState<"account" | "help" | null>(
-    null
-  );
+  const [hoverDropdown, setHoverDropdown] = useState<
+    "account" | "help" | "scan" | null
+  >(null);
   const [activeMobileSection, setActiveMobileSection] = useState<
-    "account" | "help" | null
+    "account" | "help" | "scan" | null
   >(null);
   const accountRef = useRef<HTMLDivElement>(null);
   const helpRef = useRef<HTMLDivElement>(null);
+  const scanRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = !!token;
@@ -61,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
     navigate(destination);
   };
 
-  const toggleMobileSection = (section: "account" | "help") => {
+  const toggleMobileSection = (section: "account" | "help" | "scan") => {
     setActiveMobileSection((prev) => (prev === section ? null : section));
   };
 
@@ -70,7 +72,9 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
       accountRef.current &&
       !accountRef.current.contains(event.target as Node) &&
       helpRef.current &&
-      !helpRef.current.contains(event.target as Node)
+      !helpRef.current.contains(event.target as Node) &&
+      scanRef.current &&
+      !scanRef.current.contains(event.target as Node)
     ) {
       setActiveDropdown(null);
     }
@@ -81,64 +85,21 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const isDropdownVisible = (type: "account" | "help") => {
+  const isDropdownVisible = (type: "account" | "help" | "scan") => {
     return activeDropdown === type || hoverDropdown === type;
   };
 
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.secondaryNav}>
-          <Link to="/" className={styles.secondaryLink}>
-            Home
-          </Link>
-          <span className={styles.separator}>|</span>
-          <Link to="/scan" className={styles.secondaryLink}>
-            Scan
-          </Link>
-          <span className={styles.separator}>|</span>
-          <Link to="/about" className={styles.secondaryLink}>
-            About
-          </Link>
-          <span className={styles.separator}>|</span>
-          <Link to="/contact" className={styles.secondaryLink}>
-            Contact
-          </Link>
-        </div>
         <div className={styles.container}>
           <Link to="/" className={styles.brand}>
             <img src={logo} alt="HarvestGuard" className={styles.brandIcon} />
             HarvestGuard
           </Link>
-          <div className={styles.searchWrapper}>
-            <form
-              className={styles.searchForm}
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className={styles.searchInputWrapper}>
-                <input type="search" className={styles.searchInput} />
-                <label className={styles.searchLabel}>Search scans...</label>
-              </div>
-              <button type="submit" className={styles.searchButton}>
-                <FaSearch className={styles.searchIcon} />
-              </button>
-            </form>
-            <button className={styles.hamburger} onClick={toggleMobileMenu}>
-              <FaBars />
-            </button>
-          </div>
-          <form
-            className={`${styles.searchForm} ${styles.desktopSearch}`}
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className={styles.searchInputWrapper}>
-              <input type="search" className={styles.searchInput} />
-              <label className={styles.searchLabel}>Search scans...</label>
-            </div>
-            <button type="submit" className={styles.searchButton}>
-              <FaSearch className={styles.searchIcon} />
-            </button>
-          </form>
+          <button className={styles.hamburger} onClick={toggleMobileMenu}>
+            <FaBars />
+          </button>
           <nav className={styles.desktopNav}>
             <Link
               to="/"
@@ -147,7 +108,36 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
               }`}
             >
               <FaHome />
+              Home
             </Link>
+            <div
+              className={`${styles.navLink} ${
+                activeDropdown === "scan" || location.pathname === "/scan"
+                  ? styles.active
+                  : ""
+              }`}
+              ref={scanRef}
+              onMouseEnter={() => setHoverDropdown("scan")}
+              onMouseLeave={() => setHoverDropdown(null)}
+              onClick={() =>
+                setActiveDropdown(activeDropdown === "scan" ? null : "scan")
+              }
+            >
+              <FaCamera />
+              Scan
+              {isDropdownVisible("scan") && (
+                <div className={styles.dropdown}>
+                  <Link to="/scan" className={styles.dropdownItem}>
+                    <FaImage className={styles.dropdownIcon} />
+                    Single Scan
+                  </Link>
+                  <Link to="/scan" className={styles.dropdownItem}>
+                    <FaImages className={styles.dropdownIcon} />
+                    Batch Scan
+                  </Link>
+                </div>
+              )}
+            </div>
             <div
               className={`${styles.navLink} ${
                 activeDropdown === "account" ? styles.active : ""
@@ -162,6 +152,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
               }
             >
               <FaUser />
+              Account
               {isDropdownVisible("account") && (
                 <div className={styles.dropdown}>
                   {isLoggedIn ? (
@@ -199,14 +190,6 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                 </div>
               )}
             </div>
-            <Link
-              to="/scan"
-              className={`${styles.navLink} ${
-                location.pathname === "/scan" ? styles.active : ""
-              }`}
-            >
-              <FaCamera />
-            </Link>
             <div
               className={`${styles.navLink} ${
                 activeDropdown === "help" ? styles.active : ""
@@ -219,6 +202,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
               }
             >
               <FaQuestionCircle />
+              Help
               {isDropdownVisible("help") && (
                 <div className={styles.dropdown}>
                   <Link to="/help" className={styles.dropdownItem}>
@@ -243,7 +227,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
         className={`${styles.mobileMenu} ${showMobileMenu ? styles.show : ""}`}
       >
         <div className={styles.mobileMenuHeader}>
-          <span>HarvestGuard</span>
+          <span>HARVEST GUARD</span>
           <button className={styles.closeButton} onClick={toggleMobileMenu}>
             <FaTimes />
           </button>
@@ -259,6 +243,41 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                 <FaHome /> Home
               </span>
             </Link>
+          </div>
+          <div className={styles.mobileNavSection}>
+            <button
+              className={styles.mobileNavTitle}
+              onClick={() => toggleMobileSection("scan")}
+            >
+              <span>
+                <FaCamera /> Scan
+              </span>
+              <FaAngleRight
+                className={`${styles.openIcon} ${
+                  activeMobileSection === "scan" ? styles.open : ""
+                }`}
+              />
+            </button>
+            {activeMobileSection === "scan" && (
+              <div className={styles.mobileDropdown}>
+                <Link
+                  to="/scan"
+                  className={styles.mobileNavLink}
+                  onClick={() => handleMobileLinkClick("/scan")}
+                >
+                  <FaImage className={styles.dropdownIcon} />
+                  Single Scan
+                </Link>
+                <Link
+                  to="/scan"
+                  className={styles.mobileNavLink}
+                  onClick={() => handleMobileLinkClick("/scan")}
+                >
+                  <FaImages className={styles.dropdownIcon} />
+                  Batch Scan
+                </Link>
+              </div>
+            )}
           </div>
           <div className={styles.mobileNavSection}>
             <button
@@ -329,18 +348,6 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                 )}
               </div>
             )}
-          </div>
-          <div className={styles.mobileNavSection}>
-            <Link
-              to="/scan"
-              className={styles.mobileNavTitle}
-              onClick={() => handleMobileLinkClick("/scan")}
-            >
-              <span>
-                <FaCamera /> Scan
-              </span>
-              <FaAngleRight className={styles.openIcon} />
-            </Link>
           </div>
           <div className={styles.mobileNavSection}>
             <button
