@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "./Login.module.css";
+import styles from "./SignUp.module.css";
 
-interface LoginProps {
+interface SignUpProps {
   setToken: (token: string) => void;
 }
 
-const Login: React.FC<LoginProps> = ({ setToken }) => {
+const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [serverStatus, setServerStatus] = useState("Checking...");
@@ -34,39 +35,40 @@ const Login: React.FC<LoginProps> = ({ setToken }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     if (serverStatus === "Offline") {
       setError(
-        "Cannot log in: Backend server is offline. Please try again later."
+        "Cannot sign up: Backend server is offline. Please try again later."
       );
       return;
     }
 
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
-
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/token`, {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, email }),
       });
 
       if (!response.ok) {
-        throw new Error("Invalid username or password");
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Registration failed");
       }
 
       const data = await response.json();
       setToken(data.access_token);
       localStorage.setItem("token", data.access_token);
-      localStorage.setItem("role", data.role || "user"); // Assuming backend returns role
-      setSuccess("Login successful! Redirecting...");
+      localStorage.setItem("role", data.role || "farmer");
+      setSuccess("Registration successful! Redirecting...");
+      setTimeout(() => (window.location.href = "/scan"), 1000);
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Sign-up error:", err);
       setError(
         err instanceof Error ? err.message : "Failed to connect to server"
       );
@@ -74,9 +76,9 @@ const Login: React.FC<LoginProps> = ({ setToken }) => {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginCard}>
-        <h1 className={styles.title}>HarvestGuard Login</h1>
+    <div className={styles.signupContainer}>
+      <div className={styles.signupCard}>
+        <h1 className={styles.title}>HarvestGuard Sign Up</h1>
         <div className={styles.serverStatus}>
           Server Status:{" "}
           <span
@@ -89,7 +91,7 @@ const Login: React.FC<LoginProps> = ({ setToken }) => {
             {serverStatus}
           </span>
         </div>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSignUp}>
           <div className={styles.formGroup}>
             <label htmlFor="username">Username</label>
             <input
@@ -98,6 +100,17 @@ const Login: React.FC<LoginProps> = ({ setToken }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
               required
             />
           </div>
@@ -116,18 +129,18 @@ const Login: React.FC<LoginProps> = ({ setToken }) => {
           {success && <p className={styles.success}>{success}</p>}
           <button
             type="submit"
-            className={styles.loginButton}
+            className={styles.signupButton}
             disabled={serverStatus === "Offline"}
           >
-            {serverStatus === "Offline" ? "Server Offline" : "Login"}
+            {serverStatus === "Offline" ? "Server Offline" : "Sign Up"}
           </button>
         </form>
-        <p className={styles.registerLink}>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+        <p className={styles.loginLink}>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

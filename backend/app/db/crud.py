@@ -6,7 +6,7 @@ from datetime import datetime
 
 def log_scan_result(
     db: Session,
-    filename: str,
+    image_path: str,
     decision: str,
     confidence: float,
     reconstruction_error: float,
@@ -14,7 +14,7 @@ def log_scan_result(
     user_id: int
 ):
     scan = Scan(
-        filename=filename,
+        image_path=image_path,
         decision=decision,
         confidence=confidence,
         reconstruction_error=reconstruction_error,

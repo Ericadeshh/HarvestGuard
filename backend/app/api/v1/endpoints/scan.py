@@ -1,5 +1,4 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from datetime import datetime
@@ -10,12 +9,11 @@ import logging
 from app.db.session import get_db
 from app.services.prediction import predict_image, process_image_scan
 from app.schemas.scan import ScanResult
-from app.db.models import User
+from app.db.models import User, Scan
 from app.core.security import get_current_user
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
-
 
 @router.post("/predict", response_model=ScanResult)
 async def predict(
@@ -36,21 +34,20 @@ async def predict(
 
         os.unlink(temp_path)
 
-        return {
-            "image": file.filename,
-            "decision": result["decision"],
-            "confidence": result["confidence"],
-            "reconstruction_error": result["reconstruction_error"],
-            "is_anomaly": result["is_anomaly"],
-            "timestamp": datetime.utcnow()
-        }
+        return ScanResult(
+            image=file.filename,
+            decision=result["decision"],
+            confidence=result["confidence"],
+            reconstruction_error=result["reconstruction_error"],
+            is_anomaly=result["is_anomaly"],
+            timestamp=datetime.utcnow()
+        )
 
     except Exception as e:
         logger.error(f"Prediction failed for {file.filename}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
-
-@router.post("/upload-image")
+@router.post("/upload-image", response_model=ScanResult)
 async def upload_image_for_scan(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
@@ -66,19 +63,26 @@ async def upload_image_for_scan(
 
         result = process_image_scan(
             file_bytes=content,
-            filename=file.filename,
+            image_path=file.filename,
             user_id=user_id,
             db=db
         )
 
-        return {"status": "success", "result": result}
+        # Ensure result matches ScanResult schema
+        return ScanResult(
+            image=result["image"],
+            decision=result["decision"],
+            confidence=result["confidence"],
+            reconstruction_error=result["reconstruction_error"],
+            is_anomaly=result["is_anomaly"],
+            timestamp=result["timestamp"]
+        )
 
     except Exception as e:
         logger.error(f"Scan failed for {file.filename}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Scan failed: {str(e)}")
 
-
-@router.post("/batch")
+@router.post("/batch", response_model=List[ScanResult])
 async def batch_upload_images_for_scan(
     files: List[UploadFile] = File(...),
     db: Session = Depends(get_db),
@@ -90,6 +94,7 @@ async def batch_upload_images_for_scan(
     Used by CLI and bulk ZIP uploads.
     """
     results = []
+    errors = []
     user_id = current_user.id if current_user else None
 
     for file in files:
@@ -98,25 +103,33 @@ async def batch_upload_images_for_scan(
 
             result = process_image_scan(
                 file_bytes=content,
-                filename=file.filename,
+                image_path=file.filename,
                 user_id=user_id,
                 db=db
             )
 
-            results.append({
-                "image": file.filename,
-                **result
-            })
+            results.append(ScanResult(
+                image=file.filename,
+                decision=result["decision"],
+                confidence=result["confidence"],
+                reconstruction_error=result["reconstruction_error"],
+                is_anomaly=result["is_anomaly"],
+                timestamp=result["timestamp"]
+            ))
 
         except Exception as e:
             logger.error(f"Scan failed for {file.filename}: {str(e)}")
-            results.append({
-                "image": file.filename,
-                "decision": "ERROR",
-                "confidence": 0.0,
-                "reconstruction_error": 0.0,
-                "is_anomaly": False,
-                "timestamp": datetime.utcnow()
-            })
+            errors.append(file.filename)
+            results.append(ScanResult(
+                image=file.filename,
+                decision="ERROR",
+                confidence=0.0,
+                reconstruction_error=0.0,
+                is_anomaly=False,
+                timestamp=datetime.utcnow()
+            ))
 
-    return {"status": "success", "results": results}
+    if errors:
+        raise HTTPException(status_code=500, detail=f"Some images failed to scan: {', '.join(errors)}")
+
+    return results

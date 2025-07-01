@@ -1,0 +1,123 @@
+.signupContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7fafc;
+  padding: 20px;
+  color: #2d3748;
+}
+
+.signupCard {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2d3748;
+}
+
+.serverStatus {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.statusOnline {
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.statusOffline {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #2d3748;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.signupButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signupButton:hover:not(:disabled) {
+  background-color: #38a169;
+}
+
+.signupButton:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #e53e3e;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.success {
+  color: #48bb78;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.loginLink a {
+  color: #48bb78;
+  text-decoration: none;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .signupContainer {
+    padding: 10px;
+  }
+
+  .signupCard {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}

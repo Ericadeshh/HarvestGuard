@@ -1,3 +1,5 @@
+# backend/app/services/prediction.py
+
 import os
 import sys
 import torch
@@ -104,7 +106,7 @@ def predict_image_from_bytes(file_bytes: bytes, custom_threshold: Optional[float
 # ===============================
 # Used by upload endpoints
 # ===============================
-def process_image_scan(file_bytes: bytes, filename: str, user_id: Optional[int] = None, db=None):
+def process_image_scan(file_bytes: bytes, image_path: str, user_id: Optional[int] = None, db=None):
     from app.db.crud import log_scan_result
 
     result = predict_image_from_bytes(file_bytes)
@@ -112,7 +114,7 @@ def process_image_scan(file_bytes: bytes, filename: str, user_id: Optional[int] 
     if db and user_id:
         log_scan_result(
             db=db,
-            filename=filename,
+            image_path=image_path,  # Updated to image_path
             decision=result["decision"],
             confidence=result["confidence"],
             reconstruction_error=result["reconstruction_error"],

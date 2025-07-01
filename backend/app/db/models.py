@@ -3,7 +3,7 @@ SQLAlchemy models for HarvestGuard database tables.
 Defines the schema for users, scans, and feedback tables.
 """
 
-from sqlalchemy import Column, Integer, String, Float, Enum, Text, TIMESTAMP, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Enum, Text, TIMESTAMP, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -34,6 +34,7 @@ class Scan(Base):
     reconstruction_error = Column(Float, nullable=False)
     decision = Column(Enum('Accept', 'Flag', name='scan_decisions'), nullable=False)
     confidence = Column(Float, nullable=False)
+    is_anomaly = Column(Boolean, nullable=False, default=False)  # Added to fix is_anomaly error
     timestamp = Column(TIMESTAMP, server_default=func.now())
 
 class Feedback(Base):

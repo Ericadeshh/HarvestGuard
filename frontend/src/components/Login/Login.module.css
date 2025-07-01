@@ -1,45 +1,145 @@
-/* src/components/Login.module.css */
-.wrapper {
-  min-height: 100vh;
+.loginContainer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/assets/bg.jpg");
-  background-size: cover;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  padding: 20px;
 }
-.loginForm {
-  background: #fff;
+
+.loginCard {
+  background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem;
 }
+
 .title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #2d3748;
   text-align: center;
+  margin-bottom: 1.5rem;
 }
-.input {
+
+.serverStatus {
+  font-size: 0.9rem;
+  color: #4a5568;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.statusOnline {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+.statusOffline {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input {
   width: 100%;
   padding: 0.75rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
+  border: 1px solid #e2e8f0;
   border-radius: 4px;
   font-size: 1rem;
+  color: #2d3748;
 }
-.button {
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #48bb78;
+  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.2);
+}
+
+.loginButton {
   width: 100%;
   padding: 0.75rem;
-  background: #28a745;
-  color: #fff;
+  background-color: #48bb78;
+  color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
+
+.loginButton:hover {
+  background-color: #38a169;
+}
+
+.loginButton:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
 .error {
-  color: #dc3545;
-  margin-top: 0.5rem;
+  color: #e53e3e;
   font-size: 0.9rem;
   text-align: center;
+  margin-top: 1rem;
+}
+
+.success {
+  color: #48bb78;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.registerLink {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-top: 1.5rem;
+}
+
+.registerLink a {
+  color: #48bb78;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .loginContainer {
+    padding: 10px;
+  }
+
+  .loginCard {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .formGroup input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .loginButton {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 }

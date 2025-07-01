@@ -1,0 +1,173 @@
+.scanContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7fafc;
+  color: #2d3748;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.serverStatus {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.statusOnline {
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.statusOffline {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+.scanOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.scanCard {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.scanCard h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #2d3748;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.scanButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.scanButton:hover:not(:disabled) {
+  background-color: #38a169;
+}
+
+.scanButton:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #e53e3e;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.success {
+  color: #48bb78;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.resultsContainer {
+  margin-top: 20px;
+}
+
+.resultsContainer h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resultsTable th,
+.resultsTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.resultsTable th {
+  background-color: #edf2f7;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+.accepted {
+  color: #48bb78;
+}
+
+.flagged {
+  color: #e53e3e;
+}
+
+.error {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .scanContainer {
+    padding: 10px;
+  }
+
+  .scanOptions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scanCard {
+    max-width: 100%;
+  }
+
+  .resultsTable {
+    font-size: 0.9rem;
+  }
+
+  .resultsTable th,
+  .resultsTable td {
+    padding: 8px;
+  }
+}

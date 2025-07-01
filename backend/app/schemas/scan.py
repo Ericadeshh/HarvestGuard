@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class ScanResult(BaseModel):
     image: str
@@ -7,9 +8,10 @@ class ScanResult(BaseModel):
     confidence: float
     reconstruction_error: float
     is_anomaly: bool
-    timestamp: datetime
-    
+    timestamp: Optional[datetime] = None
+
     class Config:
+        from_attributes = True
         json_schema_extra = {
             "example": {
                 "image": "test.jpg",

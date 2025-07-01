@@ -11,6 +11,7 @@ mysql-connector-python==8.4.0
 
 # Security & Authentication
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 python-jose==3.3.0
 pydantic-settings==2.5.2  # For configuration management
 

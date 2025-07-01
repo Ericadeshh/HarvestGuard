@@ -1,24 +1,160 @@
-/* src/components/Home.module.css */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .home {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 1;
+  background-color: #f4f6f8;
+  padding: 20px;
+}
+
+.hero {
   text-align: center;
-  padding: 3rem;
+  padding: 2rem 0;
 }
+
 .logo {
-  width: 100px;
+  width: 150px;
+  height: auto;
+  margin-bottom: 1.5rem;
 }
+
 .title {
-  font-size: 2rem;
-  margin-top: 1rem;
+  font-size: 1.8rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
 }
+
 .subtitle {
-  color: #555;
-  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-bottom: 1.5rem;
 }
-.link {
-  color: #007bff;
-  font-weight: bold;
+
+.serverStatus {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.statusOnline {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+.statusOffline {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
+.ctaButton {
+  font-size: 1rem;
+  color: #48bb78;
   text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #48bb78;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.ctaButton:hover {
+  background-color: #48bb78;
+  color: white;
+}
+
+.features {
+  padding: 2rem 0;
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+}
+
+.featuresTitle {
+  font-size: 1.6rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.featureCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.featureCard h3 {
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.featureCard p {
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.footer a {
+  color: #48bb78;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .home {
+    padding: 10px;
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .ctaButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .featuresTitle {
+    font-size: 1.4rem;
+  }
+
+  .featureCard {
+    padding: 1rem;
+  }
+
+  .featureCard h3 {
+    font-size: 1rem;
+  }
+
+  .featureCard p {
+    font-size: 0.8rem;
+  }
 }
