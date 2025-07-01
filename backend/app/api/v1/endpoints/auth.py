@@ -29,8 +29,8 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(
         username=user.username,
         password_hash=hashed_password,
-        email=user.email,  # Use email from UserCreate (required field)
-        role="farmer"  # Default role for new users
+        email=user.email,
+        role="farmer"
     )
     db.add(db_user)
     db.commit()

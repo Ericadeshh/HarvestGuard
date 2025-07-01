@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import styles from "./SignUp.module.css";
 
 interface SignUpProps {
@@ -15,44 +16,35 @@ const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
   const [serverStatus, setServerStatus] = useState("Checking...");
   const API_BASE_URL = "http://localhost:8000/api/v1";
 
+  // Check server status periodically
   useEffect(() => {
     const checkStatus = () => {
       fetch("http://localhost:8000/")
         .then((res) => {
-          if (res.ok) {
-            setServerStatus("Online");
-          } else {
-            setServerStatus("Offline");
-          }
+          setServerStatus(res.ok ? "Online" : "Offline");
         })
-        .catch((err) => {
-          console.error("Server status check failed:", err);
-          setServerStatus("Offline");
-        });
+        .catch(() => setServerStatus("Offline"));
     };
     checkStatus();
     const interval = setInterval(checkStatus, 5000);
     return () => clearInterval(interval);
   }, []);
 
+  // Handle signup form submission
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     if (serverStatus === "Offline") {
-      setError(
-        "Cannot sign up: Backend server is offline. Please try again later."
-      );
+      setError("Cannot sign up: Server is offline. Please try again later.");
       return;
     }
 
     try {
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, email }),
       });
 
@@ -65,10 +57,9 @@ const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
       setToken(data.access_token);
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("role", data.role || "farmer");
-      setSuccess("Registration successful! Redirecting...");
-      setTimeout(() => (window.location.href = "/scan"), 1000);
+      setSuccess("Registration successful! Redirecting to scan page...");
+      setTimeout(() => (window.location.href = "/scan"), 1500);
     } catch (err) {
-      console.error("Sign-up error:", err);
       setError(
         err instanceof Error ? err.message : "Failed to connect to server"
       );
@@ -78,9 +69,9 @@ const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
   return (
     <div className={styles.signupContainer}>
       <div className={styles.signupCard}>
-        <h1 className={styles.title}>HarvestGuard Sign Up</h1>
+        <h1 className={styles.title}>Join HarvestGuard</h1>
         <div className={styles.serverStatus}>
-          Server Status:{" "}
+          Server:{" "}
           <span
             className={
               serverStatus === "Online"
@@ -88,7 +79,12 @@ const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
                 : styles.statusOffline
             }
           >
-            {serverStatus}
+            {serverStatus}{" "}
+            {serverStatus === "Online" ? (
+              <FaCheckCircle />
+            ) : (
+              <FaExclamationCircle />
+            )}
           </span>
         </div>
         <form onSubmit={handleSignUp}>
@@ -125,8 +121,16 @@ const SignUp: React.FC<SignUpProps> = ({ setToken }) => {
               required
             />
           </div>
-          {error && <p className={styles.error}>{error}</p>}
-          {success && <p className={styles.success}>{success}</p>}
+          {success && (
+            <p className={styles.success}>
+              <FaCheckCircle className={styles.icon} /> {success}
+            </p>
+          )}
+          {error && (
+            <p className={styles.error}>
+              <FaExclamationCircle className={styles.icon} /> {error}
+            </p>
+          )}
           <button
             type="submit"
             className={styles.signupButton}

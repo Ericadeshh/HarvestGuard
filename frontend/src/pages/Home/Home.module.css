@@ -120,8 +120,9 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .home {
+    margin-top: 5rem;
     padding: 10px;
   }
 

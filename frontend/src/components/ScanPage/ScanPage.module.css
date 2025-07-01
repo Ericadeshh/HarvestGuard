@@ -1,156 +1,215 @@
 .scanContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f7fafc;
-  color: #2d3748;
+  padding: 30px;
+  background-color: #f4f1de; /* Light Sand */
+  color: #264653; /* Soft Navy */
+  font-family: "Arial", sans-serif;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  color: #264653; /* Soft Navy */
 }
 
 .serverStatus {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   font-size: 1.1rem;
+  color: #264653; /* Soft Navy */
 }
 
 .statusOnline {
-  color: #48bb78;
+  color: #2a9d8f; /* Cool Teal */
   font-weight: bold;
 }
 
+.statusOnline svg {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
 .statusOffline {
-  color: #e53e3e;
+  color: #f4a261; /* Alert Orange */
   font-weight: bold;
+}
+
+.statusOffline svg {
+  vertical-align: middle;
+  margin-left: 5px;
 }
 
 .scanOptions {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
   justify-content: center;
 }
 
 .scanCard {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #ffffff; /* Cloud White */
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
+  transition: transform 0.3s ease;
 }
 
-.scanCard h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #2d3748;
+.scanCard:hover {
+  transform: translateY(-5px);
+}
+
+.cardTitle {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #264653; /* Soft Navy */
 }
 
 .formGroup {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .formGroup label {
   display: block;
   font-size: 1rem;
-  margin-bottom: 5px;
-  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #264653; /* Soft Navy */
 }
 
 .formGroup input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid #a8d5ba; /* Mint Green */
+  border-radius: 6px;
   font-size: 1rem;
+  background-color: #f4f1de; /* Light Sand */
+  transition: border-color 0.3s ease;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #2a9d8f; /* Cool Teal */
 }
 
 .scanButton {
   width: 100%;
-  padding: 10px;
-  background-color: #48bb78;
-  color: white;
+  padding: 12px;
+  background-color: #2a9d8f; /* Cool Teal */
+  color: #ffffff; /* Cloud White */
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .scanButton:hover:not(:disabled) {
-  background-color: #38a169;
+  background-color: #1f776d; /* Darker Cool Teal */
+  transform: translateY(-2px);
 }
 
 .scanButton:disabled {
-  background-color: #cbd5e0;
+  background-color: #a8d5ba; /* Mint Green */
   cursor: not-allowed;
 }
 
-.error {
-  color: #e53e3e;
+.success {
+  color: #2a9d8f; /* Cool Teal */
   text-align: center;
-  margin: 10px 0;
+  margin: 20px 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease-in;
 }
 
-.success {
-  color: #48bb78;
+.error {
+  color: #f4a261; /* Alert Orange */
   text-align: center;
-  margin: 10px 0;
+  margin: 20px 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.icon {
+  margin-right: 8px;
 }
 
 .resultsContainer {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.resultsContainer h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #2d3748;
+.resultsContainer .cardTitle {
+  font-size: 1.7rem;
+  margin-bottom: 20px;
 }
 
 .resultsTable {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
+  background: #ffffff; /* Cloud White */
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .resultsTable th,
 .resultsTable td {
-  padding: 12px;
+  padding: 15px;
   text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #a8d5ba; /* Mint Green */
 }
 
 .resultsTable th {
-  background-color: #edf2f7;
-  font-weight: bold;
-  color: #2d3748;
+  background-color: #264653; /* Soft Navy */
+  color: #ffffff; /* Cloud White */
+  font-weight: 600;
 }
 
 .accepted {
-  color: #48bb78;
+  color: #2a9d8f; /* Cool Teal */
+  font-weight: bold;
 }
 
 .flagged {
-  color: #e53e3e;
+  color: #f4a261; /* Alert Orange */
+  font-weight: bold;
 }
 
 .error {
-  color: #e53e3e;
+  color: #f4a261; /* Alert Orange */
   font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
   .scanContainer {
-    padding: 10px;
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 2rem;
   }
 
   .scanOptions {
@@ -168,6 +227,6 @@
 
   .resultsTable th,
   .resultsTable td {
-    padding: 8px;
+    padding: 10px;
   }
 }
