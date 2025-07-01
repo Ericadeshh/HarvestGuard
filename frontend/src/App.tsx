@@ -1,30 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import ServerStatus from "./components/ServerStatus/ServerStatus";
+// src/App.tsx
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Login from "./components/Login/Login";
+import Upload from "./components/Upload/Upload";
 import Home from "./pages/Home/Home";
-import Upload from "./pages/Upload/Upload";
-import Results from "./pages/Results/Results";
-import Guide from "./pages/Guide/Guide";
-import Login from "./pages/Login/Login";
-import "./index.css";
+import styles from "./App.module.css";
 
 const App: React.FC = () => {
+  const token = localStorage.getItem("token");
+
   return (
     <Router>
-      <div className="app">
-        <Navbar />
-        <ServerStatus />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/guide" element={<Guide />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
-        <Footer />
+      <div className={styles.container}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/upload"
+            element={token ? <Upload /> : <Navigate to="/login" replace />}
+          />
+          <Route
+            path="*"
+            element={<Navigate to={token ? "/upload" : "/login"} />}
+          />
+        </Routes>
       </div>
     </Router>
   );

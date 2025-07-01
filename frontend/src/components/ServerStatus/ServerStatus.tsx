@@ -1,33 +1,21 @@
-import { useState, useEffect } from "react";
-import { checkServerStatus } from "../../services/api";
+import { useEffect, useState } from "react";
 import styles from "./ServerStatus.module.css";
 
-const ServerStatus: React.FC = () => {
-  const [status, setStatus] = useState<string>("Checking...");
+export default function ServerStatus() {
+  const [online, setOnline] = useState(false);
 
   useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const response = await checkServerStatus();
-        setStatus(response.status === "ok" ? "Online" : "Offline");
-      } catch {
-        setStatus("Offline");
-      }
-    };
-    fetchStatus();
-    const interval = setInterval(fetchStatus, 30000); // Check every 30s
-    return () => clearInterval(interval);
+    fetch("/api/v1/scan/predict", { method: "OPTIONS" })
+      .then((res) => setOnline(res.ok))
+      .catch(() => setOnline(false));
   }, []);
 
   return (
-    <div
-      className={`${styles.status} ${
-        status === "Online" ? styles.online : styles.offline
-      }`}
-    >
-      Server Status: {status}
+    <div className={styles.status}>
+      Server status:{" "}
+      <span className={online ? styles.online : styles.offline}>
+        {online ? "Online 🟢" : "Offline 🔴"}
+      </span>
     </div>
   );
-};
-
-export default ServerStatus;
+}

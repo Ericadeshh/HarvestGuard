@@ -1,19 +1,10 @@
 .status {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 8px 16px;
-  border-radius: 4px;
+  margin-bottom: 1rem;
   font-size: 0.9rem;
-  z-index: 1000;
 }
-
 .online {
-  background-color: #1abc9c;
-  color: white;
+  color: #28a745;
 }
-
 .offline {
-  background-color: #e74c3c;
-  color: white;
+  color: #dc3545;
 }

@@ -1,0 +1,7 @@
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.nav-link {
+  margin-left: 1rem;
+  font-size: 0.95rem;
+}
