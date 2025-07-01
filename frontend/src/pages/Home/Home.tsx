@@ -14,7 +14,7 @@ import {
 import { GiArtificialIntelligence } from "react-icons/gi";
 import styles from "./Home.module.css";
 import logo from "../../assets/HarvestGuardLogo.jpg";
-import heroImage from "../../assets/HarvestGuardLogo.jpg";
+import heroImage from "../../assets/heroImage.jpg";
 
 const Home: React.FC = () => {
   const [serverStatus, setServerStatus] = useState("Checking...");
