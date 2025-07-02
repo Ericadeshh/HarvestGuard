@@ -350,7 +350,7 @@
 }
 
 .techItem {
-  width: 350px !important;
+  width: 90% !important;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   padding: 2.5rem;
@@ -480,6 +480,13 @@
   }
 }
 
+.testimonialsGuideSection .flexContainer {
+  display: flex;
+  @media (max-width: 769px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
   .heroContainer {
@@ -569,7 +576,7 @@
   }
 
   .techItem {
-    width: 310px !important;
+    width: 92% !important;
     margin: 1rem;
     padding: 1.5rem;
     min-height: 180px;

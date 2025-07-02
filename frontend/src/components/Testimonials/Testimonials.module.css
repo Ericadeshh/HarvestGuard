@@ -1,0 +1,167 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.testimonials {
+  width: 50%;
+  height: 650px;
+  padding: 1rem;
+  background-color: transparent;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #f8f9fa;
+  @media (max-width: 769px) {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.testimonialTitle {
+  color: #1a2634;
+  text-align: center;
+  padding-top: 9rem;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+.highlight {
+  color: #48bb78;
+  font-weight: 600;
+}
+.p1 {
+  padding: 1rem;
+  color: #777;
+  font-size: 0.95rem; /*sure readability on smaller screens */
+}
+
+.carouselContainer {
+  position: relative;
+  overflow: hidden;
+  height: auto; /* Flexible height for content */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 400px;
+  @media (max-width: 769px) {
+    height: 450px;
+  }
+}
+
+.carousel {
+  width: 100%;
+
+  max-width: 100%;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: #00683700;
+  color: #174376;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.prevButton {
+  left: 1%; /* Adjusted for smaller screens */
+}
+
+.nextButton {
+  right: 1%; /* Adjusted for smaller screens */
+}
+
+.card {
+  padding: 1rem; /* Increased padding for better spacing */
+  width: 100%;
+  max-width: 80%; /*creased max-width for better visibility */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  align-items: center;
+  margin: 10px auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 1rem; /* Increased for better spacing */
+}
+
+.details {
+  text-align: left;
+}
+
+.testimonialText {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  color: #888; /*sted color for better readability */
+  margin: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.names {
+  color: #31a160;
+  text-align: center;
+  padding-top: 20px; /* Reduced padding for better mobile view */
+  padding-left: 1rem;
+  font-size: 1rem; /* Reduced font size for smaller screens */
+  font-weight: 600;
+  font-family: "Poppins", sans-serif; /* Corrected font-family */
+}
+.ratings {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .testimonialTitle {
+    font-size: 1.3rem;
+    padding-top: 2rem;
+  }
+  .names {
+    font-size: 1rem;
+  }
+  .p1 {
+    font-size: 0.9rem; /*maller font for smaller screens */
+  }
+
+  .card {
+    max-width: 100%; /*e space on mobile */
+    padding: 0.5rem;
+  }
+
+  .card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .testimonialText {
+    width: 100%;
+    font-size: 0.8em; /* Smaller text for mobile */
+  }
+
+  .carouselButton {
+    font-size: 1rem; /* Smaller icons for mobile */
+    padding: 0.5rem; /* Less padding */
+  }
+
+  .prevButton,
+  .nextButton {
+    top: 60%; /* Adjust position for better touch interaction */
+  }
+}

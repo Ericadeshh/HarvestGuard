@@ -1,8 +1,113 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 .guide {
-  max-width: 800px;
-  margin: auto;
+  flex: 1;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 650px;
+}
+
+.guideTitle {
+  color: #1a2634;
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+.highlight {
+  color: #48bb78;
+  font-weight: 600;
+}
+.guideDescription {
+  padding: 1rem;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.guideGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 100%;
+}
+
+.guideCard {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
 }
-.guide h2 {
+
+.guideCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(72, 187, 120, 0.3);
+}
+
+.guideIcon {
+  color: #48bb78;
   margin-bottom: 1rem;
+  font-size: 1rem !important;
+}
+
+.guideStepTitle {
+  text-align: left;
+  color: #5e503f;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.guideStepDescription {
+  text-align: left;
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .guide {
+    width: 100%;
+    min-height: auto;
+    padding: 0.5rem;
+  }
+
+  .guideTitle {
+    font-size: 1.3rem;
+    padding-top: 2rem;
+  }
+
+  .guideDescription {
+    font-size: 0.9rem;
+  }
+
+  .guideGrid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .guideCard {
+    padding: 1rem;
+  }
+
+  .guideStepTitle {
+    font-size: 1rem;
+  }
+
+  .guideStepDescription {
+    font-size: 0.8rem;
+  }
 }

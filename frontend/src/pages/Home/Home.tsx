@@ -36,20 +36,28 @@ import styles from "./Home.module.css";
 import logo from "../../assets/HarvestGuardLogo.jpg";
 import heroImage from "../../assets/heroImage.jpg";
 
+import Testimonials from "../../components/Testimonials/Testimonials";
+import Guide from "../../components/GuideContent/GuideContent";
+
 const Home: React.FC = () => {
   const [serverStatus, setServerStatus] = useState("Checking...");
   const controls = useAnimation();
   const refs = {
-    hero: useRef(null),
-    features: useRef(null),
-    tech: useRef(null),
-    stats: useRef(null),
+    hero: useRef<HTMLElement>(null),
+    features: useRef<HTMLElement>(null),
+    tech: useRef<HTMLElement>(null),
+    stats: useRef<HTMLElement>(null),
+    testimonialsGuide: useRef<HTMLElement>(null),
   };
 
   const heroInView = useInView(refs.hero, { once: false, amount: 0.5 });
   const featuresInView = useInView(refs.features, { once: false, amount: 0.3 });
   const techInView = useInView(refs.tech, { once: false, amount: 0.3 });
   const statsInView = useInView(refs.stats, { once: false, amount: 0.3 });
+  const testimonialsGuideInView = useInView(refs.testimonialsGuide, {
+    once: false,
+    amount: 0.3,
+  });
 
   const isInView = useMemo(
     () => ({
@@ -57,8 +65,15 @@ const Home: React.FC = () => {
       features: featuresInView,
       tech: techInView,
       stats: statsInView,
+      testimonialsGuide: testimonialsGuideInView,
     }),
-    [heroInView, featuresInView, techInView, statsInView]
+    [
+      heroInView,
+      featuresInView,
+      techInView,
+      statsInView,
+      testimonialsGuideInView,
+    ]
   );
 
   useEffect(() => {
@@ -86,8 +101,6 @@ const Home: React.FC = () => {
     const interval = setInterval(checkStatus, 5000);
     return () => clearInterval(interval);
   }, []);
-
-  // Removed misplaced import of easeIn, easeOut (now at top level)
 
   const sectionVariants: Variants = {
     initial: { opacity: 0, y: 50 },
@@ -127,6 +140,16 @@ const Home: React.FC = () => {
       transition: { duration: 0.6, ease: easeOut, staggerChildren: 0.2 },
     },
     statsHidden: {
+      opacity: 0,
+      y: -20,
+      transition: { duration: 0.4, ease: easeIn },
+    },
+    testimonialsGuideVisible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: easeOut },
+    },
+    testimonialsGuideHidden: {
       opacity: 0,
       y: -20,
       transition: { duration: 0.4, ease: easeIn },
@@ -242,7 +265,7 @@ const Home: React.FC = () => {
           <p className={styles.subtitle}>
             Protect your crops with{" "}
             <span className={styles.textHighlight}>
-              advanced fertilizer authenticity detection
+              advanced agricultural product authenticity detection
             </span>{" "}
             using unsupervised ML and deep learning neural networks.
           </p>
@@ -289,8 +312,8 @@ const Home: React.FC = () => {
           Why Choose <span className={styles.titleHighlight}>HarvestGuard</span>
           ?
           <br />
-          <button className={styles.AboutButton}>ABOUT</button>&nbsp;
-          <span className={styles.pipe}>|</span>&nbsp;
+          <button className={styles.AboutButton}>ABOUT</button>
+          <span className={styles.pipe}>|</span>
           <button className={styles.AboutButton}>POLICY ACT</button>
         </h2>
         <div className={styles.endLine}></div>
@@ -307,7 +330,7 @@ const Home: React.FC = () => {
             <h3>Advanced Detection</h3>
             <p>
               Our autoencoder neural network detects counterfeit and expired
-              fertilizers with{" "}
+              agricultural products with{" "}
               <span className={styles.textHighlight}>95%+ accuracy</span> using
               unsupervised learning.
             </p>
@@ -504,6 +527,24 @@ const Home: React.FC = () => {
             <div className={styles.statNumber}>5000+</div>
             <div className={styles.statLabel}>Product Database</div>
           </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Testimonials and Guide Section */}
+      <motion.section
+        ref={refs.testimonialsGuide}
+        className={styles.testimonialsGuideSection}
+        initial="initial"
+        animate={
+          isInView.testimonialsGuide
+            ? "testimonialsGuideVisible"
+            : "testimonialsGuideHidden"
+        }
+        variants={sectionVariants}
+      >
+        <div className={styles.flexContainer}>
+          <Guide />
+          <Testimonials />
         </div>
       </motion.section>
     </div>

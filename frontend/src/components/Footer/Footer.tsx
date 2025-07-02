@@ -70,15 +70,15 @@ const Footer: React.FC = () => {
           <ul>
             <li>
               <FaEnvelope />
-              <span>support@harvestguard.ai</span>
+              <span>itjedi37@gmail.com</span>
             </li>
             <li>
               <FaPhone />
-              <span>+1 (555) 123-4567</span>
+              <span>+254741091661</span>
             </li>
             <li>
               <FaMapMarkerAlt />
-              <span>123 AgriTech Park, Silicon Valley, CA 94025</span>
+              <span>Karatina University, Karatina, 1957—10101</span>
             </li>
           </ul>
         </div>
