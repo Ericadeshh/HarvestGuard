@@ -11,6 +11,8 @@ import Login from "./components/Login/Login";
 import ScanPage from "./components/ScanPage/ScanPage";
 import SignUp from "./components/SignUp/SignUp";
 import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/scrollToTop/scrollToTop";
+
 import styles from "./App.module.css";
 
 const App: React.FC = () => {
@@ -60,6 +62,7 @@ const App: React.FC = () => {
           />
         </Routes>
         <Footer />
+        <ScrollToTop />
       </div>
     </Router>
   );

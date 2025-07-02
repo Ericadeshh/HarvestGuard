@@ -196,13 +196,13 @@ const Home: React.FC = () => {
     autoplaySpeed: 4000,
     arrows: true,
     prevArrow: (
-      <button className={styles.prevBtn}>
-        <FaChevronLeft />
+      <button className="slick-prev bg-[#48bb78] text-white rounded-full p-4 hover:bg-[#38a169] transition-all duration-300 shadow-lg hover:shadow-xl">
+        <FaChevronLeft size={24} />
       </button>
     ),
     nextArrow: (
-      <button className={styles.nextBtn}>
-        <FaChevronRight />
+      <button className="slick-next bg-[#48bb78] text-white rounded-full p-4 hover:bg-[#38a169] transition-all duration-300 shadow-lg hover:shadow-xl">
+        <FaChevronRight size={24} />
       </button>
     ),
     responsive: [
@@ -284,16 +284,10 @@ const Home: React.FC = () => {
         animate={isInView.features ? "featuresVisible" : "featuresHidden"}
         variants={sectionVariants}
       >
-        <div className={styles.startLine}></div>
         <h2 className={styles.featuresTitle}>
           Why Choose <span className={styles.titleHighlight}>HarvestGuard</span>
           ?
-          <br />
-          <button className={styles.AboutButton}>ABOUT</button>&nbsp;
-          <span className={styles.pipe}>|</span>&nbsp;
-          <button className={styles.AboutButton}>POLICY ACT</button>
         </h2>
-        <div className={styles.endLine}></div>
         <div className={styles.featuresGrid}>
           <motion.div className={styles.featureCard} whileHover={{ y: -10 }}>
             <motion.div
@@ -377,10 +371,14 @@ const Home: React.FC = () => {
               <motion.div
                 key={index}
                 className={styles.techItem}
+                whileHover={{
+                  scale: 1.03,
+                  boxShadow: "0 12px 24px rgba(72, 187, 120, 0.3)",
+                }}
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  duration: 0.3,
+                  duration: 0.6,
                   ease: "easeOut",
                   delay: index * 0.1,
                 }}

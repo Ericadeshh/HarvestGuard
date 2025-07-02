@@ -171,99 +171,14 @@
   margin: 0 auto;
   text-align: center;
 }
-.startLine {
-  margin-top: -20px;
-  margin-bottom: 3rem;
-  width: 74%;
-  height: 2px;
-  background: #38a169;
-  position: relative;
-  border: none;
-  @media (max-width: 769px) {
-    width: 95%;
-  }
-}
 
-.startLine::after {
-  content: "";
-  position: absolute;
-  right: -8px;
-  bottom: -8px;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(to bottom, #002855, rgb(188, 244, 180));
-  border-radius: 50%;
-  margin-top: -100px;
-  backdrop-filter: blur(50px);
-}
-.endLine {
-  margin-top: -20px;
-  border-bottom: 2px solid #38a169;
-  width: 25%;
-  margin-left: auto; /* This pushes the element to the right */
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 2.5rem;
-}
 .featuresTitle {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   color: #1f2a44;
   margin-bottom: 3rem;
   font-weight: 800;
-  @media (max-width: 768px) {
-    font-size: 1.5rem !important;
-  }
-}
-.AboutButton {
-  margin-top: 1rem;
-  font-size: 0.7rem;
-  color: #777;
-  background-color: rgba(217, 217, 217, 0.5);
-  border: 1px solid #cacaca;
-  border-radius: 4px;
-  text-decoration: none;
-  padding: 0.5rem 2.5rem;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2);
-  position: relative; /* To enable glow effect */
 }
 
-/* Hover effects */
-.AboutButton:hover {
-  color: #fff; /* Change text color on hover */
-  background-color: rgba(72, 187, 120, 0.8); /* Darker background */
-  transform: scale(1.05); /* Slightly increase size */
-}
-
-/* Glow effect */
-.AboutButton::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  background-color: rgba(72, 187, 120, 0.6);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1; /* Place behind the button */
-  transform: translate(-50%, -50%); /* Center the glow */
-}
-
-/* Animate the glow on hover */
-.AboutButton:hover::before {
-  opacity: 1; /* Show the glow */
-}
-.pipe {
-  margin: 0 0.5rem;
-  color: #38a169;
-  font-size: 1.2rem;
-}
 .featuresGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -272,7 +187,7 @@
 
 .featureCard {
   background: white;
-  padding: 1rem;
+  padding: 2.5rem;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -280,50 +195,41 @@
 }
 
 .featureCard:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .featureIcon {
-  font-size: 2rem;
+  font-size: 2.8rem;
   color: #48bb78;
   margin-bottom: 1.5rem;
 }
 
 .featureCard h3 {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   color: #1f2a44;
   margin-bottom: 1rem;
   font-weight: 700;
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
 }
 
 .featureCard p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #4b5563;
   line-height: 1.7;
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
 }
 
 /* Technology Section */
 .techSection {
-  padding: 2rem 1rem;
+  padding: 5rem 2rem;
   background: linear-gradient(180deg, #1a2634 0%, #2d3748 100%);
   color: white;
   text-align: center;
 }
 
 .techTitle {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   margin-bottom: 2rem;
-  font-weight: 600;
-  @media (max-width: 768px) {
-    font-size: 1.5rem !important;
-  }
+  font-weight: 800;
 }
 
 .titleHighlight {
@@ -331,54 +237,44 @@
 }
 
 .techDescription {
-  font-size: 1rem;
+  font-size: 1.3rem;
   max-width: 900px;
   margin: 0 auto 3rem;
   line-height: 1.7;
   opacity: 0.9;
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-    font-weight: 500;
-    max-width: 100%;
-  }
 }
 
 .techCarousel {
   max-width: 1300px;
-  margin: 2rem 1rem;
+  margin: 0 auto;
   padding: 0 3rem;
 }
 
 .techItem {
-  width: 350px !important;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   padding: 2.5rem;
   border-radius: 16px;
   transition: all 0.4s ease;
-  margin: 0 2rem;
+  margin: 0 1rem;
   min-height: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid #38a16940;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .techItem:hover {
-  border: 1px solid #38a169;
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(72, 187, 120, 0.1);
+  box-shadow: 0 12px 24px rgba(72, 187, 120, 0.3);
 }
 
 .techIcon {
-  font-size: 1.5rem;
+  font-size: 3rem;
   color: #48bb78;
   margin-bottom: 1.5rem;
-  @media (max-width: 769px) {
-    font-size: 1.2rem;
-  }
 }
 
 .techItem h3 {
@@ -386,66 +282,78 @@
   margin-bottom: 1rem;
   color: #48bb78;
   font-weight: 700;
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
 }
 
 .techItem p {
   font-size: 1rem;
   opacity: 0.85;
   line-height: 1.6;
-  @media (max-width: 769px) {
-    font-size: 0.9rem;
-  }
 }
-.prevBtn {
-  color: red !important;
+
+/* Slick Carousel Custom Styles */
+.slick-prev,
+.slick-next {
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.slick-prev {
+  left: -60px;
+}
+
+.slick-next {
+  right: -60px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  display: none;
+}
+
+.slick-dots li button:before {
+  color: #48bb78;
+  font-size: 10px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #38a169;
 }
 
 /* Stats Section */
 .statsSection {
-  padding: 3rem 1rem;
+  padding: 5rem 2rem;
   text-align: center;
   background: #f8fafc;
 }
 
 .statsTitle {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   color: #1f2a44;
   margin-bottom: 3.5rem;
-  font-weight: 600;
-  @media (max-width: 769px) {
-    font-size: 1.5rem;
-  }
+  font-weight: 800;
 }
 
 .statsGrid {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  @media (max-width: 769px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    margin: 0 auto !important;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .statItem {
   background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
-  padding: 0.5rem 2rem;
-  border-radius: 60px;
+  padding: 2rem;
+  border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(72, 187, 120, 0.2);
-  @media (max-width: 769px) {
-    padding: 0.5rem 1rem;
-  }
 }
 
 .statItem:hover {
@@ -455,29 +363,19 @@
 .statIcon {
   color: #48bb78;
   margin-bottom: 1rem;
-  @media (max-width: 769px) {
-    font-size: 0.8rem !important;
-  }
 }
 
 .statNumber {
-  font-size: 1.3rem;
+  font-size: 2.8rem;
   font-weight: 800;
   color: #48bb78;
   margin-bottom: 0.5rem;
-  @media (max-width: 769px) {
-    font-size: 0.8rem;
-  }
 }
 
 .statLabel {
-  align-items: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #4b5563;
   font-weight: 500;
-  @media (max-width: 769px) {
-    font-size: 0.8rem;
-  }
 }
 
 /* Mobile Styles */
@@ -557,11 +455,24 @@
   }
 
   .featuresTitle {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
   }
 
   .featuresGrid {
     grid-template-columns: 1fr;
+  }
+
+  .techSection {
+    padding: 3rem 1rem;
+  }
+
+  .techTitle {
+    font-size: 2.2rem;
+  }
+
+  .techDescription {
+    font-size: 1.1rem;
+    max-width: 100%;
   }
 
   .techCarousel {
@@ -569,9 +480,49 @@
   }
 
   .techItem {
-    width: 310px !important;
-    margin: 1rem;
+    margin: 0 0.5rem;
     padding: 1.5rem;
     min-height: 180px;
+  }
+
+  .slick-prev {
+    left: 5px;
+  }
+
+  .slick-next {
+    right: 5px;
+  }
+
+  .statsSection {
+    padding: 3rem 1rem;
+  }
+
+  .statsTitle {
+    font-size: 2rem;
+  }
+
+  .statsGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .statItem {
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    min-width: 280px;
+  }
+
+  .statIcon {
+    font-size: 1.8rem;
+  }
+
+  .statNumber {
+    font-size: 1.8rem;
+  }
+
+  .statLabel {
+    font-size: 1.1rem;
   }
 }

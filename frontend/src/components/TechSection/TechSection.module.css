@@ -1,0 +1,135 @@
+.techSection {
+  padding: 5rem 2rem;
+  background: linear-gradient(180deg, #1a2634 0%, #2d3748 100%);
+  color: white;
+  text-align: center;
+}
+
+.techTitle {
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+}
+
+.titleHighlight {
+  color: #48bb78;
+}
+
+.techDescription {
+  font-size: 1.3rem;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.techCarousel {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.techItem {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 16px;
+  transition: all 0.4s ease;
+  margin: 0 1rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.techItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(72, 187, 120, 0.3);
+}
+
+.techIcon {
+  font-size: 3rem;
+  color: #48bb78;
+  margin-bottom: 1.5rem;
+}
+
+.techItem h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #48bb78;
+  font-weight: 700;
+}
+
+.techItem p {
+  font-size: 1rem;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .techSection {
+    padding: 3rem 1rem;
+  }
+
+  .techTitle {
+    font-size: 2.2rem;
+  }
+
+  .techDescription {
+    font-size: 1.1rem;
+    max-width: 100%;
+  }
+
+  .techCarousel {
+    padding: 0 1rem;
+  }
+
+  .techItem {
+    margin: 0 0.5rem;
+    padding: 1.5rem;
+    min-height: 180px;
+  }
+}
+
+.slick-prev,
+.slick-next {
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.slick-prev {
+  left: -60px;
+}
+
+.slick-next {
+  right: -60px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  display: none;
+}
+
+.slick-dots li button:before {
+  color: #48bb78;
+  font-size: 10px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #38a169;
+}
+
+@media (max-width: 768px) {
+  .slick-prev {
+    left: 5px;
+  }
+
+  .slick-next {
+    right: 5px;
+  }
+}
