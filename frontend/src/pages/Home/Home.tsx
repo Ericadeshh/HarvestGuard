@@ -312,9 +312,13 @@ const Home: React.FC = () => {
           Why Choose <span className={styles.titleHighlight}>HarvestGuard</span>
           ?
           <br />
-          <button className={styles.AboutButton}>ABOUT</button>
+          <Link to="/about" className={styles.AboutButton}>
+            ABOUT
+          </Link>
           <span className={styles.pipe}>|</span>
-          <button className={styles.AboutButton}>POLICY ACT</button>
+          <Link to="/policy-act" className={styles.AboutButton}>
+            POLICY ACT
+          </Link>
         </h2>
         <div className={styles.endLine}></div>
         <div className={styles.featuresGrid}>

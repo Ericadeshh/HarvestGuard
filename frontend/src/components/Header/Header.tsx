@@ -9,6 +9,7 @@ import {
   FaAngleRight,
   FaImage,
   FaImages,
+  FaInfoCircle,
 } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
@@ -28,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
     "account" | "help" | "scan" | null
   >(null);
   const [activeMobileSection, setActiveMobileSection] = useState<
-    "account" | "help" | "scan" | null
+    "account" | "help" | "scan" | "about" | null
   >(null);
   const accountRef = useRef<HTMLDivElement>(null);
   const helpRef = useRef<HTMLDivElement>(null);
@@ -190,6 +191,15 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                 </div>
               )}
             </div>
+            <Link
+              to="/about"
+              className={`${styles.navLink} ${
+                location.pathname === "/about" ? styles.active : ""
+              }`}
+            >
+              <FaInfoCircle />
+              About
+            </Link>
             <div
               className={`${styles.navLink} ${
                 activeDropdown === "help" ? styles.active : ""
@@ -205,7 +215,7 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
               Help
               {isDropdownVisible("help") && (
                 <div className={styles.dropdown}>
-                  <Link to="/help" className={styles.dropdownItem}>
+                  <Link to="/help#help-center" className={styles.dropdownItem}>
                     Help Center
                   </Link>
                   <Link to="/help#faq" className={styles.dropdownItem}>
@@ -213,6 +223,9 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                   </Link>
                   <Link to="/help#guides" className={styles.dropdownItem}>
                     User Guides
+                  </Link>
+                  <Link to="/policy-act" className={styles.dropdownItem}>
+                    Policy Act
                   </Link>
                   <Link to="/contact" className={styles.dropdownItem}>
                     Contact Support
@@ -350,6 +363,17 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
             )}
           </div>
           <div className={styles.mobileNavSection}>
+            <Link
+              to="/about"
+              className={styles.mobileNavTitle}
+              onClick={() => handleMobileLinkClick("/about")}
+            >
+              <span>
+                <FaInfoCircle /> About
+              </span>
+            </Link>
+          </div>
+          <div className={styles.mobileNavSection}>
             <button
               className={styles.mobileNavTitle}
               onClick={() => toggleMobileSection("help")}
@@ -366,9 +390,9 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
             {activeMobileSection === "help" && (
               <div className={styles.mobileDropdown}>
                 <Link
-                  to="/help"
+                  to="/help#help-center"
                   className={styles.mobileNavLink}
-                  onClick={() => handleMobileLinkClick("/help")}
+                  onClick={() => handleMobileLinkClick("/help#help-center")}
                 >
                   Help Center
                 </Link>
@@ -385,6 +409,13 @@ const Header: React.FC<HeaderProps> = ({ token, setToken }) => {
                   onClick={() => handleMobileLinkClick("/help#guides")}
                 >
                   User Guides
+                </Link>
+                <Link
+                  to="/policy-act"
+                  className={styles.mobileNavLink}
+                  onClick={() => handleMobileLinkClick("/policy-act")}
+                >
+                  Policy Act
                 </Link>
                 <Link
                   to="/contact"

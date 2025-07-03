@@ -10,10 +10,12 @@ import Home from "./pages/Home/Home";
 import Login from "./components/Login/Login";
 import ScanPage from "./components/ScanPage/ScanPage";
 import SignUp from "./components/SignUp/SignUp";
+import About from "./pages/About/About";
+import ContactUs from "./pages/ContactUs/ContactUs";
+import PolicyAct from "./pages/PolicyAct/PolicyAct";
+import Help from "./pages/Help/Help";
 import Footer from "./components/Footer/Footer";
-//import Testimonials from "./components/Testimonials/Testimonials";
 import ScrollToTop from "./components/scrollToTop/scrollToTop";
-
 import styles from "./App.module.css";
 
 const App: React.FC = () => {
@@ -57,12 +59,15 @@ const App: React.FC = () => {
               )
             }
           />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/policy-act" element={<PolicyAct />} />
+          <Route path="/help" element={<Help />} />
           <Route
             path="*"
             element={<Navigate to={token ? "/scan" : "/login"} replace />}
           />
         </Routes>
-        {/*<Testimonials />*/}
         <Footer />
         <ScrollToTop />
       </div>

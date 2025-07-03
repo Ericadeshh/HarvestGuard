@@ -1,0 +1,198 @@
+.about {
+  padding: 2rem;
+  padding-top: 6rem;
+  background-color: #f8f9fa;
+  text-align: center;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.aboutTitle {
+  color: #006838;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.aboutDescription {
+  color: #777;
+  font-size: 1rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.missionVision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+}
+
+.mission,
+.vision {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission:hover,
+.vision:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(72, 187, 120, 0.3);
+}
+
+.sectionTitle {
+  color: #5e503f;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.sectionText {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.milestones {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.milestonesTitle {
+  color: #5e503f;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.milestoneList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.milestoneItem {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.milestoneItem:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(72, 187, 120, 0.3);
+}
+
+.milestoneIcon {
+  color: #48bb78;
+  margin-right: 1rem;
+}
+
+.milestoneContent {
+  text-align: left;
+}
+
+.milestoneYear {
+  color: #48bb78;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.milestoneTitle {
+  color: #5e503f;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.milestoneDescription {
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .about {
+    min-height: auto;
+  }
+
+  .aboutTitle {
+    font-size: 1.5rem;
+  }
+
+  .aboutDescription {
+    font-size: 0.9rem;
+    padding: 0 1rem;
+  }
+
+  .missionVision {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .mission,
+  .vision {
+    padding: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+
+  .sectionText {
+    font-size: 0.8rem;
+  }
+
+  .milestonesTitle {
+    font-size: 1.3rem;
+  }
+
+  .milestoneList {
+    padding: 0 1rem;
+  }
+
+  .milestoneItem {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .milestoneIcon {
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
+
+  .milestoneYear {
+    font-size: 1rem;
+  }
+
+  .milestoneTitle {
+    font-size: 1rem;
+  }
+
+  .milestoneDescription {
+    font-size: 0.8rem;
+  }
+}
