@@ -3,7 +3,6 @@
 Dependancies:
 pip install torch torchvision icrawler opencv-python
 pip freeze > requirements.txt
-# Harvest Guard
 
 A web application for **Harvest Guard**, built with **React**, **TypeScript**, and **Vite**.  
 This app aims to be an AI Solution for Expired & Counterfeit Agricultural Product Detection
